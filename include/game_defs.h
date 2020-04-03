@@ -18,6 +18,10 @@ using namespace std;
 
 
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
+
+
+
+
 struct Texture
 {
     int mX;
@@ -37,27 +41,6 @@ struct vect2
     float y;
 };
 
-struct Triangle
-{
-    vect2 direction;
-    int radius;
-    int numGuidance;
-    SDL_Point startPoint;
-    SDL_Point endPoint;
-};
-
-//colState 0: No collision 
-//1: collision 
-//2: end
-struct CollisionMarker
-{
-    int colState;
-    int index;
-    SDL_Point startPoint;
-    SDL_Point endPoint;
-};
-
-
 struct AudioClip
 {
     string wavPath;
@@ -65,12 +48,16 @@ struct AudioClip
     Uint32 wavLength;
     Uint8 *wavBuffer;
 };
-/*
-static float vect2dot(vect2 v1, vect2 v2)
-{
-    return v1.x * v2.x + v1.y * v2.y;
-}
-*/
 
+struct GameState
+{
+    string State;
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+    SDL_AudioDeviceID audioDevice;
+
+    SDL_Texture *man;
+    Texture manTex;
+};
 #endif // GAMEDEFS_H
 

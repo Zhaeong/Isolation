@@ -1,9 +1,7 @@
 #include "main.h"
 
 
-//Declarations for sdl window displaying
-SDL_Window *window = NULL;
-SDL_Renderer *renderer = NULL;
+GameState GS;
 
 const int FPS = 60;
 //How many miliseconds per frame
@@ -21,7 +19,7 @@ void gameloop()
     //The color at which the screen will be if alpha = 0 on all textures
     //SDL_SetRenderDrawColor(renderer, screenColor.r, screenColor.g, screenColor.b, screenColor.a);
 
-    SDL_RenderClear(renderer);
+    SDL_RenderClear(GS.renderer);
 
     ////////////////////////////////////////////////////////////////////////
     //Main Game Code
@@ -57,7 +55,7 @@ void gameloop()
         }
     }
           
-
+    RenderTexture(GS.renderer, GS.manTex);
 
     ////////////////////////////////////////////////////////////////////////
     //End of main game code
@@ -82,9 +80,16 @@ int main(int argv, char **args)
     //cout << "Starting Game\n";
 
     //Initiate SDL
-    StartSDL(&window, &renderer);
- 
-/*
+    StartSDL(&(GS.window), &(GS.renderer));
+    GS.man = GetSDLTexture(GS.renderer, GS.window, "./res/png/man.png");
+    RemoveTextureWhiteSpace(GS.man);
+    GS.State = "START";
+
+
+    GS.manTex = InitTexture(GS.man, 20, 20); 
+
+    /*
+
     audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);
     if (audioDevice == 0) {
         printf("Failed to open audio: %s", SDL_GetError());

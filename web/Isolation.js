@@ -159,7 +159,7 @@ Module.expectedDataFileDownloads++;
    "audio": 0
   } ],
   "remote_package_size": 48260,
-  "package_uuid": "a228e713-97b1-4985-8037-bb997c359a0a"
+  "package_uuid": "9aa501f7-3f9a-4933-9ca4-78ac47c79460"
  });
 })();
 
@@ -489,6 +489,10 @@ var setTempRet0 = function(value) {
  tempRet0 = value;
 };
 
+var getTempRet0 = function() {
+ return tempRet0;
+};
+
 var wasmBinary;
 
 if (Module["wasmBinary"]) wasmBinary = Module["wasmBinary"];
@@ -556,8 +560,8 @@ function setValue(ptr, value, type, noSafe) {
 var wasmMemory;
 
 var wasmTable = new WebAssembly.Table({
- "initial": 574,
- "maximum": 574 + 0,
+ "initial": 647,
+ "maximum": 647 + 0,
  "element": "anyfunc"
 });
 
@@ -771,7 +775,7 @@ function updateGlobalBufferAndViews(buf) {
  Module["HEAPF64"] = HEAPF64 = new Float64Array(buf);
 }
 
-var STACK_BASE = 5307376, STACK_MAX = 64496, DYNAMIC_BASE = 5307376, DYNAMICTOP_PTR = 64336;
+var STACK_BASE = 5326256, STACK_MAX = 83376, DYNAMIC_BASE = 5326256, DYNAMICTOP_PTR = 83216;
 
 assert(STACK_BASE % 16 === 0, "stack must start aligned");
 
@@ -1136,7 +1140,7 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 33652: function($0, $1, $2) {
+ 34548: function($0, $1, $2) {
   var w = $0;
   var h = $1;
   var pixels = $2;
@@ -1207,7 +1211,7 @@ var ASM_CONSTS = {
   SDL2.ctx.putImageData(SDL2.image, 0, 0);
   return 0;
  },
- 35107: function($0, $1, $2, $3, $4) {
+ 36003: function($0, $1, $2, $3, $4) {
   var w = $0;
   var h = $1;
   var hot_x = $2;
@@ -1244,30 +1248,30 @@ var ASM_CONSTS = {
   stringToUTF8(url, urlBuf, url.length + 1);
   return urlBuf;
  },
- 36096: function($0) {
+ 36992: function($0) {
   if (Module["canvas"]) {
    Module["canvas"].style["cursor"] = UTF8ToString($0);
   }
   return 0;
  },
- 36189: function() {
+ 37085: function() {
   if (Module["canvas"]) {
    Module["canvas"].style["cursor"] = "none";
   }
  },
- 37414: function() {
+ 38310: function() {
   return screen.width;
  },
- 37441: function() {
+ 38337: function() {
   return screen.height;
  },
- 37514: function($0) {
+ 38410: function($0) {
   if (typeof Module["setWindowTitle"] !== "undefined") {
    Module["setWindowTitle"](UTF8ToString($0));
   }
   return 0;
  },
- 37668: function() {
+ 38564: function() {
   if (typeof AudioContext !== "undefined") {
    return 1;
   } else if (typeof webkitAudioContext !== "undefined") {
@@ -1275,7 +1279,7 @@ var ASM_CONSTS = {
   }
   return 0;
  },
- 37834: function() {
+ 38730: function() {
   if (typeof navigator.mediaDevices !== "undefined" && typeof navigator.mediaDevices.getUserMedia !== "undefined") {
    return 1;
   } else if (typeof navigator.webkitGetUserMedia !== "undefined") {
@@ -1283,7 +1287,7 @@ var ASM_CONSTS = {
   }
   return 0;
  },
- 38060: function($0) {
+ 38956: function($0) {
   if (typeof Module["SDL2"] === "undefined") {
    Module["SDL2"] = {};
   }
@@ -1302,11 +1306,11 @@ var ASM_CONSTS = {
   }
   return SDL2.audioContext === undefined ? -1 : 0;
  },
- 38543: function() {
+ 39439: function() {
   var SDL2 = Module["SDL2"];
   return SDL2.audioContext.sampleRate;
  },
- 38613: function($0, $1, $2, $3) {
+ 39509: function($0, $1, $2, $3) {
   var SDL2 = Module["SDL2"];
   var have_microphone = function(stream) {
    if (SDL2.capture.silenceTimer !== undefined) {
@@ -1347,7 +1351,7 @@ var ASM_CONSTS = {
    }, have_microphone, no_microphone);
   }
  },
- 40265: function($0, $1, $2, $3) {
+ 41161: function($0, $1, $2, $3) {
   var SDL2 = Module["SDL2"];
   SDL2.audio.scriptProcessorNode = SDL2.audioContext["createScriptProcessor"]($1, 0, $0);
   SDL2.audio.scriptProcessorNode["onaudioprocess"] = function(e) {
@@ -1359,7 +1363,7 @@ var ASM_CONSTS = {
   };
   SDL2.audio.scriptProcessorNode["connect"](SDL2.audioContext["destination"]);
  },
- 40675: function($0, $1) {
+ 41571: function($0, $1) {
   var SDL2 = Module["SDL2"];
   var numChannels = SDL2.capture.currentCaptureBuffer.numberOfChannels;
   for (var c = 0; c < numChannels; ++c) {
@@ -1378,7 +1382,7 @@ var ASM_CONSTS = {
    }
   }
  },
- 41280: function($0, $1) {
+ 42176: function($0, $1) {
   var SDL2 = Module["SDL2"];
   var numChannels = SDL2.audio.currentOutputBuffer["numberOfChannels"];
   for (var c = 0; c < numChannels; ++c) {
@@ -1391,7 +1395,7 @@ var ASM_CONSTS = {
    }
   }
  },
- 41760: function($0) {
+ 42656: function($0) {
   var SDL2 = Module["SDL2"];
   if ($0) {
    if (SDL2.capture.silenceTimer !== undefined) {
@@ -4375,6 +4379,10 @@ function ___syscall54(which, varargs) {
 
 function ___unlock() {}
 
+function _abort() {
+ abort();
+}
+
 function _emscripten_get_now() {
  abort();
 }
@@ -6175,6 +6183,31 @@ function _emscripten_get_num_gamepads() {
  return JSEvents.lastGamepadState.length;
 }
 
+function _emscripten_get_preloaded_image_data(path, w, h) {
+ if ((path | 0) === path) path = UTF8ToString(path);
+ path = PATH_FS.resolve(path);
+ var canvas = Module["preloadedImages"][path];
+ if (canvas) {
+  var ctx = canvas.getContext("2d");
+  var image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  var buf = _malloc(canvas.width * canvas.height * 4);
+  HEAPU8.set(image.data, buf);
+  HEAP32[w >> 2] = canvas.width;
+  HEAP32[h >> 2] = canvas.height;
+  return buf;
+ }
+ return 0;
+}
+
+function _emscripten_get_preloaded_image_data_from_FILE(file, w, h) {
+ var fd = Module["_fileno"](file);
+ var stream = FS.getStream(fd);
+ if (stream) {
+  return _emscripten_get_preloaded_image_data(stream.path, w, h);
+ }
+ return 0;
+}
+
 function _emscripten_glActiveTexture(x0) {
  GLctx["activeTexture"](x0);
 }
@@ -7556,6 +7589,58 @@ function _emscripten_glViewport(x0, x1, x2, x3) {
  GLctx["viewport"](x0, x1, x2, x3);
 }
 
+var setjmpId = 0;
+
+function _saveSetjmp(env, label, table, size) {
+ env = env | 0;
+ label = label | 0;
+ table = table | 0;
+ size = size | 0;
+ var i = 0;
+ setjmpId = setjmpId + 1 | 0;
+ HEAP32[env >> 2] = setjmpId;
+ while ((i | 0) < (size | 0)) {
+  if ((HEAP32[table + (i << 3) >> 2] | 0) == 0) {
+   HEAP32[table + (i << 3) >> 2] = setjmpId;
+   HEAP32[table + ((i << 3) + 4) >> 2] = label;
+   HEAP32[table + ((i << 3) + 8) >> 2] = 0;
+   setTempRet0(size | 0);
+   return table | 0;
+  }
+  i = i + 1 | 0;
+ }
+ size = size * 2 | 0;
+ table = _realloc(table | 0, 8 * (size + 1 | 0) | 0) | 0;
+ table = _saveSetjmp(env | 0, label | 0, table | 0, size | 0) | 0;
+ setTempRet0(size | 0);
+ return table | 0;
+}
+
+function _testSetjmp(id, table, size) {
+ id = id | 0;
+ table = table | 0;
+ size = size | 0;
+ var i = 0, curr = 0;
+ while ((i | 0) < (size | 0)) {
+  curr = HEAP32[table + (i << 3) >> 2] | 0;
+  if ((curr | 0) == 0) break;
+  if ((curr | 0) == (id | 0)) {
+   return HEAP32[table + ((i << 3) + 4) >> 2] | 0;
+  }
+  i = i + 1 | 0;
+ }
+ return 0;
+}
+
+function _longjmp(env, value) {
+ _setThrew(env, value || 1);
+ throw "longjmp";
+}
+
+function _emscripten_longjmp(env, value) {
+ _longjmp(env, value);
+}
+
 function _emscripten_memcpy_big(dest, src, num) {
  HEAPU8.set(HEAPU8.subarray(src, src + num), dest);
 }
@@ -8230,6 +8315,10 @@ function _fd_write(fd, iov, iovcnt, pnum) {
  }
 }
 
+function _getTempRet0() {
+ return getTempRet0() | 0;
+}
+
 function _gettimeofday(ptr) {
  var now = Date.now();
  HEAP32[ptr >> 2] = now / 1e3 | 0;
@@ -8383,6 +8472,7 @@ var asmLibraryArg = {
  "__syscall5": ___syscall5,
  "__syscall54": ___syscall54,
  "__unlock": ___unlock,
+ "abort": _abort,
  "clock_gettime": _clock_gettime,
  "dlclose": _dlclose,
  "dlerror": _dlerror,
@@ -8412,6 +8502,8 @@ var asmLibraryArg = {
  "emscripten_get_element_css_size": _emscripten_get_element_css_size,
  "emscripten_get_gamepad_status": _emscripten_get_gamepad_status,
  "emscripten_get_num_gamepads": _emscripten_get_num_gamepads,
+ "emscripten_get_preloaded_image_data": _emscripten_get_preloaded_image_data,
+ "emscripten_get_preloaded_image_data_from_FILE": _emscripten_get_preloaded_image_data_from_FILE,
  "emscripten_glActiveTexture": _emscripten_glActiveTexture,
  "emscripten_glAttachShader": _emscripten_glAttachShader,
  "emscripten_glBeginQueryEXT": _emscripten_glBeginQueryEXT,
@@ -8573,6 +8665,7 @@ var asmLibraryArg = {
  "emscripten_glVertexAttribDivisorANGLE": _emscripten_glVertexAttribDivisorANGLE,
  "emscripten_glVertexAttribPointer": _emscripten_glVertexAttribPointer,
  "emscripten_glViewport": _emscripten_glViewport,
+ "emscripten_longjmp": _emscripten_longjmp,
  "emscripten_memcpy_big": _emscripten_memcpy_big,
  "emscripten_request_fullscreen_strategy": _emscripten_request_fullscreen_strategy,
  "emscripten_request_pointerlock": _emscripten_request_pointerlock,
@@ -8609,13 +8702,27 @@ var asmLibraryArg = {
  "fd_read": _fd_read,
  "fd_seek": _fd_seek,
  "fd_write": _fd_write,
+ "getTempRet0": _getTempRet0,
  "gettimeofday": _gettimeofday,
+ "invoke_i": invoke_i,
+ "invoke_ii": invoke_ii,
+ "invoke_iii": invoke_iii,
+ "invoke_iiii": invoke_iiii,
+ "invoke_iiiii": invoke_iiiii,
+ "invoke_iiiiiiiii": invoke_iiiiiiiii,
+ "invoke_iiiiiiiiii": invoke_iiiiiiiiii,
+ "invoke_jiji": invoke_jiji,
+ "invoke_vi": invoke_vi,
+ "invoke_vii": invoke_vii,
+ "invoke_viii": invoke_viii,
  "memory": wasmMemory,
  "nanosleep": _nanosleep,
+ "saveSetjmp": _saveSetjmp,
  "setTempRet0": _setTempRet0,
  "sigaction": _sigaction,
  "signal": _signal,
- "table": wasmTable
+ "table": wasmTable,
+ "testSetjmp": _testSetjmp
 };
 
 var asm = createWasm();
@@ -8646,6 +8753,12 @@ var _malloc = Module["_malloc"] = function() {
  return Module["asm"]["malloc"].apply(null, arguments);
 };
 
+var _realloc = Module["_realloc"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["realloc"].apply(null, arguments);
+};
+
 var ___errno_location = Module["___errno_location"] = function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
@@ -8658,10 +8771,100 @@ var _fflush = Module["_fflush"] = function() {
  return Module["asm"]["fflush"].apply(null, arguments);
 };
 
+var _fileno = Module["_fileno"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["fileno"].apply(null, arguments);
+};
+
+var _setThrew = Module["_setThrew"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["setThrew"].apply(null, arguments);
+};
+
 var _emscripten_GetProcAddress = Module["_emscripten_GetProcAddress"] = function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["emscripten_GetProcAddress"].apply(null, arguments);
+};
+
+var dynCall_vi = Module["dynCall_vi"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_vi"].apply(null, arguments);
+};
+
+var dynCall_vii = Module["dynCall_vii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_vii"].apply(null, arguments);
+};
+
+var dynCall_viii = Module["dynCall_viii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_viii"].apply(null, arguments);
+};
+
+var dynCall_viiii = Module["dynCall_viiii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_viiii"].apply(null, arguments);
+};
+
+var dynCall_i = Module["dynCall_i"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_i"].apply(null, arguments);
+};
+
+var dynCall_ii = Module["dynCall_ii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_ii"].apply(null, arguments);
+};
+
+var dynCall_iii = Module["dynCall_iii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_iii"].apply(null, arguments);
+};
+
+var dynCall_iiii = Module["dynCall_iiii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_iiii"].apply(null, arguments);
+};
+
+var dynCall_iiiii = Module["dynCall_iiiii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_iiiii"].apply(null, arguments);
+};
+
+var dynCall_iiiiii = Module["dynCall_iiiiii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_iiiiii"].apply(null, arguments);
+};
+
+var dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_iiiiiiiii"].apply(null, arguments);
+};
+
+var dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_iiiiiiiiii"].apply(null, arguments);
+};
+
+var dynCall_jiji = Module["dynCall_jiji"] = function() {
+ assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
+ assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
+ return Module["asm"]["dynCall_jiji"].apply(null, arguments);
 };
 
 var ___set_stack_limit = Module["___set_stack_limit"] = function() {
@@ -8694,82 +8897,16 @@ var dynCall_v = Module["dynCall_v"] = function() {
  return Module["asm"]["dynCall_v"].apply(null, arguments);
 };
 
-var dynCall_viiii = Module["dynCall_viiii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_viiii"].apply(null, arguments);
-};
-
-var dynCall_vi = Module["dynCall_vi"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_vi"].apply(null, arguments);
-};
-
-var dynCall_iiiii = Module["dynCall_iiiii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_iiiii"].apply(null, arguments);
-};
-
-var dynCall_ii = Module["dynCall_ii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_ii"].apply(null, arguments);
-};
-
-var dynCall_iiii = Module["dynCall_iiii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_iiii"].apply(null, arguments);
-};
-
-var dynCall_iii = Module["dynCall_iii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_iii"].apply(null, arguments);
-};
-
-var dynCall_jiji = Module["dynCall_jiji"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_jiji"].apply(null, arguments);
-};
-
 var dynCall_ji = Module["dynCall_ji"] = function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["dynCall_ji"].apply(null, arguments);
 };
 
-var dynCall_vii = Module["dynCall_vii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_vii"].apply(null, arguments);
-};
-
-var dynCall_iiiiii = Module["dynCall_iiiiii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_iiiiii"].apply(null, arguments);
-};
-
 var dynCall_iiiiidii = Module["dynCall_iiiiidii"] = function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["dynCall_iiiiidii"].apply(null, arguments);
-};
-
-var dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_iiiiiiiiii"].apply(null, arguments);
-};
-
-var dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_iiiiiiiii"].apply(null, arguments);
 };
 
 var dynCall_viiiiiii = Module["dynCall_viiiiiii"] = function() {
@@ -8788,18 +8925,6 @@ var dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = function() {
  assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["dynCall_iiiiiiii"].apply(null, arguments);
-};
-
-var dynCall_i = Module["dynCall_i"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_i"].apply(null, arguments);
-};
-
-var dynCall_viii = Module["dynCall_viii"] = function() {
- assert(runtimeInitialized, "you need to wait for the runtime to be ready (e.g. wait for main() to be called)");
- assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
- return Module["asm"]["dynCall_viii"].apply(null, arguments);
 };
 
 var dynCall_iidiiii = Module["dynCall_iidiiii"] = function() {
@@ -8885,6 +9010,127 @@ var dynCall_viiiiii = Module["dynCall_viiiiii"] = function() {
  assert(!runtimeExited, "the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)");
  return Module["asm"]["dynCall_viiiiii"].apply(null, arguments);
 };
+
+function invoke_ii(index, a1) {
+ var sp = stackSave();
+ try {
+  return dynCall_ii(index, a1);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiiii(index, a1, a2, a3, a4) {
+ var sp = stackSave();
+ try {
+  return dynCall_iiiii(index, a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiii(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  return dynCall_iiii(index, a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_vi(index, a1) {
+ var sp = stackSave();
+ try {
+  dynCall_vi(index, a1);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viii(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  dynCall_viii(index, a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_vii(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  dynCall_vii(index, a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iii(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  return dynCall_iii(index, a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+ var sp = stackSave();
+ try {
+  return dynCall_iiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8) {
+ var sp = stackSave();
+ try {
+  return dynCall_iiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_i(index) {
+ var sp = stackSave();
+ try {
+  return dynCall_i(index);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_jiji(index, a1, a2, a3, a4) {
+ var sp = stackSave();
+ try {
+  return dynCall_jiji(index, a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
 
 Module["asm"] = asm;
 
