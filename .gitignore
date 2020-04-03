@@ -1,3 +1,7 @@
+#vim
+*.swp
+*.swo
+
 # Prerequisites
 *.d
 
@@ -6,7 +10,6 @@
 *.lo
 *.o
 *.obj
-*.swp
 # Precompiled Headers
 *.gch
 *.pch
