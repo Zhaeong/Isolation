@@ -20,8 +20,6 @@ using namespace std;
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
 
 
-
-
 struct Texture
 {
     int mX;
@@ -35,6 +33,21 @@ struct Texture
     SDL_RendererFlip mFlip;
 };
 
+struct TexturePart
+{
+    SDL_Texture *mTexture;
+    TexturePart *mReferenceTexture;
+    SDL_Point mOffSet;
+    SDL_Rect mSrcRect;
+
+    int mX;
+    int mY;
+
+    int mRotation;
+    int mAlpha;
+    SDL_Point *mCenter;
+    SDL_RendererFlip mFlip;
+};
 struct vect2
 {
     float x;
@@ -52,12 +65,13 @@ struct AudioClip
 struct GameState
 {
     string State;
+    SDL_Color screenColor;
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_AudioDeviceID audioDevice;
 
     SDL_Texture *man;
-    Texture manTex;
+    TexturePart manTex;
 };
 #endif // GAMEDEFS_H
 

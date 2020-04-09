@@ -207,6 +207,40 @@ Texture InitTexture(SDL_Texture *sdlTexture, int x, int y)
     return outTex;
 }
 
+TexturePart InitTexturePart(SDL_Texture *sdlTexture,
+        TexturePart *texPart,
+        int xOffset, 
+        int yOffset,
+        int x,
+        int y,
+        int w,
+        int h)
+{
+    TexturePart outTex;
+
+    outTex.mTexture = sdlTexture;
+    outTex.mReferenceTexture = NULL;
+
+    outTex.mOffSet.x = xOffset;
+    outTex.mOffSet.y = yOffset;
+
+    outTex.mSrcRect.x = x;
+    outTex.mSrcRect.y = y;
+    outTex.mSrcRect.w = w;
+    outTex.mSrcRect.h = h;
+
+    outTex.mX = 0;
+    outTex.mY = 0;
+
+    outTex.mRotation = 0;
+    outTex.mAlpha = 255;
+
+    outTex.mCenter = NULL;
+    outTex.mFlip = SDL_FLIP_NONE;
+    return outTex;
+}
+
+
 void RenderTexture(SDL_Renderer *renderer, Texture tex)
 {
     //Don't render if the alpha is 0
@@ -230,6 +264,26 @@ void RenderTexture(SDL_Renderer *renderer, Texture tex)
         dstRect.w = tex.mW;
 
         SDL_RenderCopyEx(renderer, tex.mTexture, &srcRect, &dstRect, tex.mRotation, tex.mCenter, tex.mFlip);
+    }
+}
+
+void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
+{
+    //Don't render if the alpha is 0
+    if(tex.mAlpha > 0)
+    {
+        SDL_SetTextureBlendMode(tex.mTexture, SDL_BLENDMODE_BLEND);
+
+        SDL_SetTextureAlphaMod(tex.mTexture, tex.mAlpha);
+
+        SDL_Rect dstRect;
+
+        dstRect.x = tex.mX;
+        dstRect.y = tex.mY;
+        dstRect.h = tex.mSrcRect.h;
+        dstRect.w = tex.mSrcRect.w;
+
+        SDL_RenderCopyEx(renderer, tex.mTexture, &tex.mSrcRect, &dstRect, tex.mRotation, tex.mCenter, tex.mFlip);
     }
 }
 
@@ -321,4 +375,4 @@ bool TextureMouseCollisionSingle(Texture mTexture, int xPos, int yPos)
 
     return false;
 }
-    
+

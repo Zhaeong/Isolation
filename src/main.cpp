@@ -3,23 +3,26 @@
 
 GameState GS;
 
+
+#ifndef EMSCRIPTEN
 const int FPS = 60;
 //How many miliseconds per frame
 const int FrameDelay = 1000 / FPS;
-
+#endif 
 
 SDL_AudioDeviceID audioDevice;
 
 void gameloop() 
 {
     Uint32 frameStart;
-    Uint32 frameTime;
+
     frameStart = SDL_GetTicks();  
 
-    //The color at which the screen will be if alpha = 0 on all textures
-    //SDL_SetRenderDrawColor(renderer, screenColor.r, screenColor.g, screenColor.b, screenColor.a);
-
     SDL_RenderClear(GS.renderer);
+
+    //The color at which the screen will be if alpha = 0 on all textures
+    SDL_SetRenderDrawColor(GS.renderer, GS.screenColor.r, GS.screenColor.g, GS.screenColor.b, GS.screenColor.a);
+
 
     ////////////////////////////////////////////////////////////////////////
     //Main Game Code
@@ -40,34 +43,33 @@ void gameloop()
                 //cout << "MOUSE_DOWN \n";
                 break;
             case SDL_MOUSEBUTTONUP:
-                {
-                    //cout <<  "MOUSE_UP\n";
-                    SDL_GetMouseState(&xMouse, &yMouse);
+                //cout <<  "MOUSE_UP\n";
+                SDL_GetMouseState(&xMouse, &yMouse);
 
-                    //SDL_Point mousePoint = {xMouse, yMouse};
-                    
+                //SDL_Point mousePoint = {xMouse, yMouse};
 
-                  
-                }
+                break;
             case SDL_QUIT:
                 exit(0);
                 break;
         }
     }
-          
-    RenderTexture(GS.renderer, GS.manTex);
+
+    RenderTexturePart(GS.renderer, GS.manTex);
 
     ////////////////////////////////////////////////////////////////////////
     //End of main game code
     ////////////////////////////////////////////////////////////////////////
 
+#ifndef EMSCRIPTEN
+    Uint32 frameTime;
     frameTime = SDL_GetTicks() - frameStart;
 
     if (FrameDelay > frameTime)
     {
         SDL_Delay(FrameDelay - frameTime);
     }
-
+#endif 
     //emscripten_cancel_main_loop();
 }
 
@@ -82,21 +84,32 @@ int main(int argv, char **args)
     //Initiate SDL
     StartSDL(&(GS.window), &(GS.renderer));
     GS.man = GetSDLTexture(GS.renderer, GS.window, "./res/png/man.png");
-    RemoveTextureWhiteSpace(GS.man);
+    //RemoveTextureWhiteSpace(GS.man);
     GS.State = "START";
+    GS.screenColor.r = 0;
+    GS.screenColor.g = 0;
+    GS.screenColor.b = 0;
+    GS.screenColor.a = 255;
 
-
-    GS.manTex = InitTexture(GS.man, 20, 20); 
+    GS.manTex = InitTexturePart(GS.man,
+            NULL,
+            0,
+            0,
+            20,
+            20,
+            140,
+            140
+            ); 
 
     /*
 
-    audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);
-    if (audioDevice == 0) {
-        printf("Failed to open audio: %s", SDL_GetError());
-    } 
-*/
+       audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);
+       if (audioDevice == 0) {
+       printf("Failed to open audio: %s", SDL_GetError());
+       } 
+     */
 
-//    SDL_PauseAudioDevice(audioDevice, 0);
+    //    SDL_PauseAudioDevice(audioDevice, 0);
 
 
 #ifdef EMSCRIPTEN

@@ -22,7 +22,18 @@ SDL_Texture* GetSDLTexture(SDL_Renderer *renderer, SDL_Window *window, string te
 
 Texture InitTexture(SDL_Texture *sdlTexture, int x, int y);
 
+TexturePart InitTexturePart(SDL_Texture *sdlTexture,
+        TexturePart *texPart,
+        int xOffset, 
+        int yOffset,
+        int x,
+        int y,
+        int w,
+        int h);
+
 void RenderTexture(SDL_Renderer *renderer, Texture tex);
+
+void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex);
 
 void RemoveTextureWhiteSpace(SDL_Texture *texture);
 
