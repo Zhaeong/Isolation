@@ -219,7 +219,7 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
     TexturePart outTex;
 
     outTex.mTexture = sdlTexture;
-    outTex.mReferenceTexture = NULL;
+    outTex.mReferenceTexture = texPart;
 
     outTex.mOffSet.x = xOffset;
     outTex.mOffSet.y = yOffset;
