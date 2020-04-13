@@ -37,9 +37,10 @@ struct TexturePart
 {
     SDL_Texture *mTexture;
     TexturePart *mReferenceTexture;
-    SDL_Point mOffSet;
     SDL_Rect mSrcRect;
 
+    //Note the positional values become offset values if there's a parent
+    //reference texture
     int mX;
     int mY;
 
@@ -71,7 +72,7 @@ struct GameState
     SDL_AudioDeviceID audioDevice;
 
     SDL_Texture *man;
-    TexturePart manTex;
+    TexturePart manTexArray[10];
 };
 #endif // GAMEDEFS_H
 

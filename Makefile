@@ -18,7 +18,8 @@ CC = em++
 #-ggdb compiles with debug symbols
 #-mwindows compiles without terminal
 
-CFLAGS = -Wshadow -Wall -O3 
+#CFLAGS = -Wshadow -Wall -O3  
+CFLAGS = -Wshadow -Wall -O3 -DDEBUG  
 #-std=c++11
 LINKERS =-s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' --preload-file res --profiling -s ASSERTIONS=1 -s ALLOW_MEMORY_GROWTH=1
 #ALLOW_MEMORY_GROWTH=1

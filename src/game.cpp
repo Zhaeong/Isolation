@@ -209,8 +209,8 @@ Texture InitTexture(SDL_Texture *sdlTexture, int x, int y)
 
 TexturePart InitTexturePart(SDL_Texture *sdlTexture,
         TexturePart *texPart,
-        int xOffset, 
-        int yOffset,
+        int xPos, 
+        int yPos,
         int x,
         int y,
         int w,
@@ -221,16 +221,13 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
     outTex.mTexture = sdlTexture;
     outTex.mReferenceTexture = texPart;
 
-    outTex.mOffSet.x = xOffset;
-    outTex.mOffSet.y = yOffset;
-
     outTex.mSrcRect.x = x;
     outTex.mSrcRect.y = y;
     outTex.mSrcRect.w = w;
     outTex.mSrcRect.h = h;
 
-    outTex.mX = 0;
-    outTex.mY = 0;
+    outTex.mX = xPos;
+    outTex.mY = yPos;
 
     outTex.mRotation = 0;
     outTex.mAlpha = 255;
@@ -258,8 +255,11 @@ void RenderTexture(SDL_Renderer *renderer, Texture tex)
         srcRect.h = tex.mH;
         srcRect.w = tex.mW;
 
-        dstRect.x = tex.mX;
-        dstRect.y = tex.mY;
+        int xPos = tex.mX;
+        int yPos = tex.mY;
+
+        dstRect.x = xPos;
+        dstRect.y = yPos; 
         dstRect.h = tex.mH;
         dstRect.w = tex.mW;
 
@@ -276,14 +276,62 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
 
         SDL_SetTextureAlphaMod(tex.mTexture, tex.mAlpha);
 
-        SDL_Rect dstRect;
 
-        dstRect.x = tex.mX;
-        dstRect.y = tex.mY;
+        int xPos = tex.mX;
+        int yPos = tex.mY;
+        if(tex.mReferenceTexture != NULL)
+        {
+            xPos += tex.mReferenceTexture->mX;
+            yPos += tex.mReferenceTexture->mY;
+        }
+
+        SDL_Rect dstRect;
+        dstRect.x = xPos;
+        dstRect.y = yPos; 
+
         dstRect.h = tex.mSrcRect.h;
         dstRect.w = tex.mSrcRect.w;
 
+
         SDL_RenderCopyEx(renderer, tex.mTexture, &tex.mSrcRect, &dstRect, tex.mRotation, tex.mCenter, tex.mFlip);
+#ifdef DEBUG 
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+
+        int midX = xPos + (tex.mSrcRect.w / 2);
+        int midY = yPos + (tex.mSrcRect.h / 2);
+
+        SDL_RenderDrawLine(renderer,
+                xPos,
+                yPos,
+                midX,
+                midY);
+
+        SDL_RenderDrawLine(renderer,
+                xPos,
+                yPos,
+                xPos,
+                yPos + tex.mSrcRect.h);
+
+        //Draw line of rotated start and end points
+
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+        SDL_Point startPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mRotation);
+        SDL_Point endPoint = RotatePointByOtherPoint(xPos, yPos + tex.mSrcRect.h, midX, midY, tex.mRotation); 
+        SDL_RenderDrawLine(renderer,
+                startPoint.x,
+                startPoint.y,
+                midX,
+                midY);
+        SDL_RenderDrawLine(renderer,
+                startPoint.x,
+                startPoint.y,
+                endPoint.x,
+                endPoint.y);
+
+        //cout << "inix: " << xPos << "iniy:" <<yPos + tex.mSrcRect.h<< "\n";
+        //cout << "endx: " << endPoint.x << "endy:" << endPoint.y << "\n";
+
+#endif
     }
 }
 
@@ -376,3 +424,26 @@ bool TextureMouseCollisionSingle(Texture mTexture, int xPos, int yPos)
     return false;
 }
 
+SDL_Point RotatePointByOtherPoint(int inX,
+                                  int inY,
+                                  int centerX,
+                                  int centerY,
+                                  int degrees)
+{
+    SDL_Point retPoint;
+    double rad = degrees * PI / (double)180.0;
+    double cosVal = cos(rad);
+    double sinVal = sin(rad);
+
+    //Change offset points back to origin
+    int startX = inX - centerX;
+    int startY = inY - centerY;
+
+    double rotateX = startX * cosVal - startY * sinVal;
+    double rotateY = startX * sinVal + startY * cosVal;
+
+    retPoint.x = rotateX + centerX; 
+    retPoint.y = rotateY + centerY;
+    
+    return retPoint;
+}

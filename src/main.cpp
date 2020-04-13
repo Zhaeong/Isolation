@@ -18,10 +18,11 @@ void gameloop()
 
     frameStart = SDL_GetTicks();  
 
-    SDL_RenderClear(GS.renderer);
-
     //The color at which the screen will be if alpha = 0 on all textures
     SDL_SetRenderDrawColor(GS.renderer, GS.screenColor.r, GS.screenColor.g, GS.screenColor.b, GS.screenColor.a);
+
+
+    SDL_RenderClear(GS.renderer);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -41,11 +42,13 @@ void gameloop()
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 //cout << "MOUSE_DOWN \n";
+                GS.manTexArray[0].mX += 1;
+                GS.manTexArray[0].mY += 1;
                 break;
             case SDL_MOUSEBUTTONUP:
                 //cout <<  "MOUSE_UP\n";
                 SDL_GetMouseState(&xMouse, &yMouse);
-
+                cout << "mouseX: " << xMouse << " mouseY: " << yMouse << "\n";
                 //SDL_Point mousePoint = {xMouse, yMouse};
 
                 break;
@@ -55,7 +58,8 @@ void gameloop()
         }
     }
 
-    RenderTexturePart(GS.renderer, GS.manTex);
+    RenderTexturePart(GS.renderer, GS.manTexArray[0]);
+    RenderTexturePart(GS.renderer, GS.manTexArray[1]);
 
     ////////////////////////////////////////////////////////////////////////
     //End of main game code
@@ -91,7 +95,8 @@ int main(int argv, char **args)
     GS.screenColor.b = 0;
     GS.screenColor.a = 255;
 
-    GS.manTex = InitTexturePart(GS.man,
+    //Head
+    GS.manTexArray[0] = InitTexturePart(GS.man,
             NULL,
             0,
             0,
@@ -100,6 +105,19 @@ int main(int argv, char **args)
             140,
             140
             ); 
+    //Body
+    GS.manTexArray[1] = InitTexturePart(GS.man,
+            &GS.manTexArray[0], 
+            10,
+            140,
+            190,
+            20,
+            180,
+            240
+            ); 
+
+    GS.manTexArray[0].mRotation = 30;
+
 
     /*
 
