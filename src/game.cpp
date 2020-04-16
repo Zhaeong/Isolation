@@ -281,8 +281,23 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
         int yPos = tex.mY;
         if(tex.mReferenceTexture != NULL)
         {
-            xPos += tex.mReferenceTexture->mX;
-            yPos += tex.mReferenceTexture->mY;
+
+            //If the parent texture has a rotation, we need to rotate the anchor point by the 
+            //mid point of parent texture so that it aligns
+            if(tex.mReferenceTexture->mRotation != 0)
+            {
+                int midX = tex.mReferenceTexture->mX + (tex.mReferenceTexture->mSrcRect.w / 2);
+                int midY = tex.mReferenceTexture->mY + (tex.mReferenceTexture->mSrcRect.h / 2);
+                SDL_Point rotatedPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mReferenceTexture->mRotation);
+                xPos = rotatedPoint.x;
+                yPos = rotatedPoint.y;
+            }
+            else
+            {
+                xPos += tex.mReferenceTexture->mX;
+                yPos += tex.mReferenceTexture->mY;
+
+            }
         }
 
         SDL_Rect dstRect;
@@ -425,10 +440,10 @@ bool TextureMouseCollisionSingle(Texture mTexture, int xPos, int yPos)
 }
 
 SDL_Point RotatePointByOtherPoint(int inX,
-                                  int inY,
-                                  int centerX,
-                                  int centerY,
-                                  int degrees)
+        int inY,
+        int centerX,
+        int centerY,
+        int degrees)
 {
     SDL_Point retPoint;
     double rad = degrees * PI / (double)180.0;
@@ -444,6 +459,6 @@ SDL_Point RotatePointByOtherPoint(int inX,
 
     retPoint.x = rotateX + centerX; 
     retPoint.y = rotateY + centerY;
-    
+
     return retPoint;
 }

@@ -58,6 +58,8 @@ void gameloop()
         }
     }
 
+    GS.manTexArray[0].mRotation += 1;
+
     RenderTexturePart(GS.renderer, GS.manTexArray[0]);
     RenderTexturePart(GS.renderer, GS.manTexArray[1]);
 

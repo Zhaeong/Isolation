@@ -39,16 +39,18 @@ struct TexturePart
     TexturePart *mReferenceTexture;
     SDL_Rect mSrcRect;
 
-    //Note the positional values become offset values if there's a parent
-    //reference texture
     int mX;
     int mY;
+
+    int mOffsetX;
+    int mOffsetY;
 
     int mRotation;
     int mAlpha;
     SDL_Point *mCenter;
     SDL_RendererFlip mFlip;
 };
+
 struct vect2
 {
     float x;
