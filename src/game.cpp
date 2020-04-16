@@ -281,7 +281,8 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
         int yPos = tex.mY;
         if(tex.mReferenceTexture != NULL)
         {
-
+            xPos += tex.mReferenceTexture->mX;
+            yPos += tex.mReferenceTexture->mY;
             //If the parent texture has a rotation, we need to rotate the anchor point by the 
             //mid point of parent texture so that it aligns
             if(tex.mReferenceTexture->mRotation != 0)
@@ -292,12 +293,7 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
                 xPos = rotatedPoint.x;
                 yPos = rotatedPoint.y;
             }
-            else
-            {
-                xPos += tex.mReferenceTexture->mX;
-                yPos += tex.mReferenceTexture->mY;
 
-            }
         }
 
         SDL_Rect dstRect;
