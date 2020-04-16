@@ -58,10 +58,15 @@ void gameloop()
         }
     }
 
-    GS.manTexArray[0].mRotation += 1;
+    ProcessTexturePartArray(GS.manTexArray, ManTexArraySize);
+    GS.manTexArray[1].mRotation += 1;
+
+
+    //Render Code
 
     RenderTexturePart(GS.renderer, GS.manTexArray[0]);
     RenderTexturePart(GS.renderer, GS.manTexArray[1]);
+    RenderTexturePart(GS.renderer, GS.manTexArray[2]);
 
     ////////////////////////////////////////////////////////////////////////
     //End of main game code
@@ -102,6 +107,8 @@ int main(int argv, char **args)
             NULL,
             0,
             0,
+            0,
+            0,
             20,
             20,
             140,
@@ -110,6 +117,8 @@ int main(int argv, char **args)
     //Body
     GS.manTexArray[1] = InitTexturePart(GS.man,
             &GS.manTexArray[0], 
+            0,
+            0,
             10,
             140,
             190,
@@ -118,7 +127,19 @@ int main(int argv, char **args)
             240
             ); 
 
-    GS.manTexArray[0].mRotation = 30;
+    //Leg
+    GS.manTexArray[2] = InitTexturePart(GS.man,
+            &GS.manTexArray[1], 
+            0,
+            0,
+            10,
+            140,
+            400,
+            30,
+            55,
+            180 
+            ); 
+    //GS.manTexArray[0].mRotation = 30;
 
 
     /*

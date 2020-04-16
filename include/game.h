@@ -26,10 +26,13 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
         TexturePart *texPart,
         int xPos, 
         int yPos,
+        int xOffset,
+        int yOffset,
         int x,
         int y,
         int w,
         int h);
+
 void RenderTexture(SDL_Renderer *renderer, Texture tex);
 
 void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex);
@@ -46,6 +49,7 @@ SDL_Point RotatePointByOtherPoint(int inX,
                                   int centerY,
                                   int degrees);
 
+void ProcessTexturePartArray(TexturePart *texturePartArray, int size);
 
 #endif // GAME_H
  

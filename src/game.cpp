@@ -211,6 +211,8 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
         TexturePart *texPart,
         int xPos, 
         int yPos,
+        int xOffset,
+        int yOffset,
         int x,
         int y,
         int w,
@@ -228,6 +230,9 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
 
     outTex.mX = xPos;
     outTex.mY = yPos;
+
+    outTex.mXoffset = xOffset;
+    outTex.mYoffset = yOffset;
 
     outTex.mRotation = 0;
     outTex.mAlpha = 255;
@@ -267,6 +272,8 @@ void RenderTexture(SDL_Renderer *renderer, Texture tex)
     }
 }
 
+
+
 void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
 {
     //Don't render if the alpha is 0
@@ -281,8 +288,9 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
         int yPos = tex.mY;
         if(tex.mReferenceTexture != NULL)
         {
-            xPos += tex.mReferenceTexture->mX;
-            yPos += tex.mReferenceTexture->mY;
+            xPos = tex.mReferenceTexture->mX + tex.mXoffset;
+            yPos = tex.mReferenceTexture->mY + tex.mYoffset;
+
             //If the parent texture has a rotation, we need to rotate the anchor point by the 
             //mid point of parent texture so that it aligns
             if(tex.mReferenceTexture->mRotation != 0)
@@ -457,4 +465,32 @@ SDL_Point RotatePointByOtherPoint(int inX,
     retPoint.y = rotateY + centerY;
 
     return retPoint;
+}
+
+void ProcessTexturePartArray(TexturePart *texturePartArray, int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        TexturePart tex = texturePartArray[i];
+        if(tex.mReferenceTexture != NULL)
+        {
+            int xPos = tex.mReferenceTexture->mX + tex.mXoffset;
+            int yPos = tex.mReferenceTexture->mY + tex.mYoffset;
+
+            //If the parent texture has a rotation, we need to rotate the anchor point by the 
+            //mid point of parent texture so that it aligns
+            if(tex.mReferenceTexture->mRotation != 0)
+            {
+                int midX = tex.mReferenceTexture->mX + (tex.mReferenceTexture->mSrcRect.w / 2);
+                int midY = tex.mReferenceTexture->mY + (tex.mReferenceTexture->mSrcRect.h / 2);
+                SDL_Point rotatedPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mReferenceTexture->mRotation);
+                xPos = rotatedPoint.x;
+                yPos = rotatedPoint.y;
+                tex.mX = xPos;
+                tex.mY = yPos;
+            }
+
+            texturePartArray[i] = tex;
+        }
+    }
 }

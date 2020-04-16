@@ -19,7 +19,6 @@ using namespace std;
 
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
 
-
 struct Texture
 {
     int mX;
@@ -42,8 +41,8 @@ struct TexturePart
     int mX;
     int mY;
 
-    int mOffsetX;
-    int mOffsetY;
+    int mXoffset;
+    int mYoffset;
 
     int mRotation;
     int mAlpha;
@@ -65,6 +64,8 @@ struct AudioClip
     Uint8 *wavBuffer;
 };
 
+
+const int ManTexArraySize = 10;
 struct GameState
 {
     string State;
@@ -74,7 +75,11 @@ struct GameState
     SDL_AudioDeviceID audioDevice;
 
     SDL_Texture *man;
-    TexturePart manTexArray[10];
+    TexturePart manTexArray[ManTexArraySize];
 };
+
+
+
+
 #endif // GAMEDEFS_H
 
