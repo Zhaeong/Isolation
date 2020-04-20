@@ -146,7 +146,7 @@ int main(int argv, char **args)
             &GS.manTexArray[2], 
             0,
             0,
-            0,
+            27,
             170,
             400,
             30,
@@ -161,6 +161,8 @@ int main(int argv, char **args)
 
     GS.manTexArray[2].mCenter.x = 27;
     GS.manTexArray[2].mCenter.y = 0;
+
+    GS.manTexArray[3].mXrenderOffset = -27;
     /*
 
        audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);

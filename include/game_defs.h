@@ -43,10 +43,16 @@ struct TexturePart
     int mXoffset;
     int mYoffset;
 
+    //For use when rendering to subtract from position of offset parent
+    int mXrenderOffset;
+    int mYrenderOffset;
+
     double mRotation;
     int mAlpha;
     SDL_Point mCenter;
     SDL_RendererFlip mFlip;
+    
+
 
     //Rotation specific variables
 

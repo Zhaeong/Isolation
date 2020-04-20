@@ -234,6 +234,9 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
     outTex.mXoffset = xOffset;
     outTex.mYoffset = yOffset;
 
+    outTex.mXrenderOffset = 0;
+    outTex.mYrenderOffset = 0;
+
     outTex.mRotation = 0;
     outTex.mAlpha = 255;
 
@@ -317,8 +320,8 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
         }
 
         SDL_Rect dstRect;
-        dstRect.x = xPos;
-        dstRect.y = yPos; 
+        dstRect.x = xPos + tex.mXrenderOffset;
+        dstRect.y = yPos + tex.mYrenderOffset; 
 
         //divided by to to shrink size of texture by 50%
         dstRect.h = tex.mSrcRect.h;
