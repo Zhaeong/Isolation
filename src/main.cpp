@@ -59,7 +59,8 @@ void gameloop()
     }
 
     ProcessTexturePartArray(GS.manTexArray, ManTexArraySize);
-    GS.manTexArray[1].mRotation += 1;
+    GS.manTexArray[0].mRotation += 1;
+    GS.manTexArray[1].mRotation -= 1;
 
 
     //Render Code
