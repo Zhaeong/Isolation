@@ -237,8 +237,19 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
     outTex.mRotation = 0;
     outTex.mAlpha = 255;
 
-    outTex.mCenter = NULL;
+    outTex.mCenter.x = w/2;
+    outTex.mCenter.y = h/2;
+
     outTex.mFlip = SDL_FLIP_NONE;
+
+    //Rotation
+    outTex.mEnableRotation = false;
+    outTex.mRotState = 0;
+    outTex.mParentRotAngleStart = 0;
+    outTex.mRotSpeed = 0.5;
+    outTex.mRotMax = 0;
+    outTex.mRotMin = 0;
+
     return outTex;
 }
 
@@ -295,8 +306,9 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
             //mid point of parent texture so that it aligns
             if(tex.mReferenceTexture->mRotation != 0)
             {
-                int midX = tex.mReferenceTexture->mX + (tex.mReferenceTexture->mSrcRect.w / 2);
-                int midY = tex.mReferenceTexture->mY + (tex.mReferenceTexture->mSrcRect.h / 2);
+                int midX = tex.mReferenceTexture->mX + tex.mReferenceTexture->mCenter.x;
+                int midY = tex.mReferenceTexture->mY + tex.mReferenceTexture->mCenter.y;
+
                 SDL_Point rotatedPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mReferenceTexture->mRotation);
                 xPos = rotatedPoint.x;
                 yPos = rotatedPoint.y;
@@ -308,16 +320,17 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
         dstRect.x = xPos;
         dstRect.y = yPos; 
 
+        //divided by to to shrink size of texture by 50%
         dstRect.h = tex.mSrcRect.h;
         dstRect.w = tex.mSrcRect.w;
 
 
-        SDL_RenderCopyEx(renderer, tex.mTexture, &tex.mSrcRect, &dstRect, tex.mRotation, tex.mCenter, tex.mFlip);
+        SDL_RenderCopyEx(renderer, tex.mTexture, &tex.mSrcRect, &dstRect, tex.mRotation, &tex.mCenter, tex.mFlip);
 #ifdef DEBUG 
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 
-        int midX = xPos + (tex.mSrcRect.w / 2);
-        int midY = yPos + (tex.mSrcRect.h / 2);
+        int midX = xPos + tex.mCenter.x;
+        int midY = yPos + tex.mCenter.y;
 
         SDL_RenderDrawLine(renderer,
                 xPos,
@@ -481,16 +494,45 @@ void ProcessTexturePartArray(TexturePart *texturePartArray, int size)
             //mid point of parent texture so that it aligns
             if(tex.mReferenceTexture->mRotation != 0)
             {
-                int midX = tex.mReferenceTexture->mX + (tex.mReferenceTexture->mSrcRect.w / 2);
-                int midY = tex.mReferenceTexture->mY + (tex.mReferenceTexture->mSrcRect.h / 2);
+                int midX = tex.mReferenceTexture->mX + tex.mReferenceTexture->mCenter.x;
+                int midY = tex.mReferenceTexture->mY + tex.mReferenceTexture->mCenter.y;
                 SDL_Point rotatedPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mReferenceTexture->mRotation);
                 xPos = rotatedPoint.x;
                 yPos = rotatedPoint.y;
-                tex.mX = xPos;
-                tex.mY = yPos;
-            }
 
-            texturePartArray[i] = tex;
+            }
+            tex.mX = xPos;
+            tex.mY = yPos;
+
         }
+
+        //Apply rotation based on struct vals
+        if(tex.mEnableRotation)
+        {
+            if(tex.mRotState == 1)
+            {
+                if(tex.mRotation < tex.mRotMax)
+                {
+                    tex.mRotation += tex.mRotSpeed;
+                }
+                else
+                {
+                    tex.mRotState = 2;
+                }
+            }
+            else if(tex.mRotState == 2)
+            {
+                if(tex.mRotation > tex.mRotMin)
+                {
+                    tex.mRotation -= tex.mRotSpeed;
+                }
+                else
+                {
+                    tex.mRotState = 1;
+                }
+
+            }
+        }
+        texturePartArray[i] = tex;
     }
 }

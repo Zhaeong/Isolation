@@ -16,7 +16,6 @@ using namespace std;
 
 #define PI 3.14159265
 
-
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
 
 struct Texture
@@ -44,10 +43,25 @@ struct TexturePart
     int mXoffset;
     int mYoffset;
 
-    int mRotation;
+    double mRotation;
     int mAlpha;
-    SDL_Point *mCenter;
+    SDL_Point mCenter;
     SDL_RendererFlip mFlip;
+
+    //Rotation specific variables
+
+    bool mEnableRotation;
+    //0 for still,
+    //1 for left
+    //2 for right
+    int mRotState;
+
+    //When to begin rotation
+    int mParentRotAngleStart;
+
+    double mRotSpeed;
+    int mRotMax;
+    int mRotMin;
 };
 
 struct vect2
