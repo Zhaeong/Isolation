@@ -10,8 +10,8 @@ using namespace std;
 
 
 
-#define GAMEWIDTH  500 
-#define GAMEHEIGHT 500
+#define GAMEWIDTH  700 
+#define GAMEHEIGHT 700
 
 
 #define PI 3.14159265

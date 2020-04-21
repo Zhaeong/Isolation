@@ -111,10 +111,10 @@ int main(int argv, char **args)
             0,
             0,
             0,
-            20,
-            20,
-            140,
-            140
+            128,
+            7,
+            87,
+            97 
             ); 
     //Body
     GS.manTexArray[1] = InitTexturePart(GS.man,
@@ -123,23 +123,23 @@ int main(int argv, char **args)
             0,
             10,
             60,
-            190,
-            20,
-            180,
-            240
+            123,
+            156,
+            117,
+            175 
             ); 
 
-    //left leg
+    //left thigh 
     GS.manTexArray[2] = InitTexturePart(GS.man,
             &GS.manTexArray[1], 
             0,
             0,
             10,
             120,
-            400,
-            30,
-            55,
-            180 
+            105,
+            355,
+            70,
+            138 
             ); 
     //right leg
     GS.manTexArray[3] = InitTexturePart(GS.man,
@@ -148,10 +148,10 @@ int main(int argv, char **args)
             0,
             27,
             170,
-            400,
-            30,
-            55,
-            180 
+            113,
+            520,
+            58,
+            123 
             ); 
     
     GS.manTexArray[2].mEnableRotation = true;
