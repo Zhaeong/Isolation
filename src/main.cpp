@@ -111,22 +111,22 @@ int main(int argv, char **args)
             0,
             0,
             0,
-            128,
-            7,
-            87,
-            97 
+            63,
+            4,
+            42,
+            48 
             ); 
     //Body
     GS.manTexArray[1] = InitTexturePart(GS.man,
             &GS.manTexArray[0], 
             0,
             0,
-            10,
-            60,
-            123,
-            156,
-            117,
-            175 
+            -5,
+            48,
+            62,
+            79,
+            58,
+            88 
             ); 
 
     //left thigh 
@@ -134,24 +134,24 @@ int main(int argv, char **args)
             &GS.manTexArray[1], 
             0,
             0,
-            10,
-            120,
-            105,
-            355,
-            70,
-            138 
+            0,
+            88,
+            54,
+            177,
+            34,
+            71 
             ); 
     //right leg
     GS.manTexArray[3] = InitTexturePart(GS.man,
             &GS.manTexArray[2], 
             0,
             0,
-            27,
-            170,
-            113,
-            520,
+            0,
+            70,
             58,
-            123 
+            259,
+            27,
+            62 
             ); 
     
     GS.manTexArray[2].mEnableRotation = true;
@@ -162,7 +162,7 @@ int main(int argv, char **args)
     GS.manTexArray[2].mCenter.x = 27;
     GS.manTexArray[2].mCenter.y = 0;
 
-    GS.manTexArray[3].mXrenderOffset = -27;
+    GS.manTexArray[3].mXrenderOffset = -(GS.manTexArray[2].mSrcRect.w/2);
     /*
 
        audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);

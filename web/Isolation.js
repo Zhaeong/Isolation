@@ -155,16 +155,21 @@ Module.expectedDataFileDownloads++;
   "files": [ {
    "filename": "/res/png/man.png",
    "start": 0,
-   "end": 247466,
+   "end": 100970,
    "audio": 0
   }, {
    "filename": "/res/png/man1.png",
-   "start": 247466,
-   "end": 295726,
+   "start": 100970,
+   "end": 149230,
+   "audio": 0
+  }, {
+   "filename": "/res/png/manOriginal.png",
+   "start": 149230,
+   "end": 396696,
    "audio": 0
   } ],
-  "remote_package_size": 295726,
-  "package_uuid": "bdce950d-d7eb-499e-b40c-aadfb5ccf02b"
+  "remote_package_size": 396696,
+  "package_uuid": "ad5400ba-4d53-4db0-b2fd-b756fd4cd86f"
  });
 })();
 
