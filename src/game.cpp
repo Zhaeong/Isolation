@@ -320,6 +320,10 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
         }
 
         SDL_Rect dstRect;
+
+
+        //Renderoffset is the displacement of rendering 
+
         dstRect.x = xPos + tex.mXrenderOffset;
         dstRect.y = yPos + tex.mYrenderOffset; 
 
@@ -349,24 +353,53 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
 
         //Draw line of rotated start and end points
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+        //Bounding of new 
         SDL_Point startPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mRotation);
-        SDL_Point endPoint = RotatePointByOtherPoint(xPos, yPos + tex.mSrcRect.h, midX, midY, tex.mRotation); 
+
+        SDL_SetRenderDrawColor(renderer, 255, 200, 14, SDL_ALPHA_OPAQUE);
+        SDL_Point endPointVertical = RotatePointByOtherPoint(xPos, yPos + tex.mSrcRect.h, midX, midY, tex.mRotation); 
+        SDL_RenderDrawLine(renderer,
+                startPoint.x,
+                startPoint.y,
+                endPointVertical.x,
+                endPointVertical.y);
+        SDL_Point endPointHorizontal = RotatePointByOtherPoint(xPos + tex.mSrcRect.w, yPos, midX, midY, tex.mRotation); 
+        SDL_RenderDrawLine(renderer,
+                startPoint.x,
+                startPoint.y,
+                endPointHorizontal.x,
+                endPointHorizontal.y);
+
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderDrawLine(renderer,
                 startPoint.x,
                 startPoint.y,
                 midX,
                 midY);
+
+
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
         SDL_RenderDrawLine(renderer,
-                startPoint.x,
-                startPoint.y,
-                endPoint.x,
-                endPoint.y);
+                xPos,
+                yPos,
+                xPos + tex.mXrenderOffset,
+                yPos + tex.mYrenderOffset);
+
 
         //cout << "inix: " << xPos << "iniy:" <<yPos + tex.mSrcRect.h<< "\n";
         //cout << "endx: " << endPoint.x << "endy:" << endPoint.y << "\n";
 
 #endif
+    }
+}
+
+void RenderTexturePartArray(SDL_Renderer *renderer, TexturePart *texturePartArray, int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        //TexturePart tex = ;
+        RenderTexturePart(renderer, texturePartArray[i]);
     }
 }
 

@@ -64,11 +64,12 @@ void gameloop()
 
 
     //Render Code
-
-    RenderTexturePart(GS.renderer, GS.manTexArray[0]);
-    RenderTexturePart(GS.renderer, GS.manTexArray[1]);
-    RenderTexturePart(GS.renderer, GS.manTexArray[2]);
-    RenderTexturePart(GS.renderer, GS.manTexArray[3]);
+    RenderTexturePartArray(GS.renderer, GS.manTexArray, ManTexArraySize);
+    //RenderTexturePart(GS.renderer, GS.manTexArray[0]);
+    //RenderTexturePart(GS.renderer, GS.manTexArray[1]);
+    //RenderTexturePart(GS.renderer, GS.manTexArray[2]);
+    //RenderTexturePart(GS.renderer, GS.manTexArray[3]);
+    //RenderTexturePart(GS.renderer, GS.manTexArray[4]);
 
     ////////////////////////////////////////////////////////////////////////
     //End of main game code
@@ -97,7 +98,7 @@ int main(int argv, char **args)
     //Initiate SDL
     StartSDL(&(GS.window), &(GS.renderer));
     GS.man = GetSDLTexture(GS.renderer, GS.window, "./res/png/man.png");
-    //RemoveTextureWhiteSpace(GS.man);
+    RemoveTextureWhiteSpace(GS.man);
     GS.State = "START";
     GS.screenColor.r = 0;
     GS.screenColor.g = 0;
@@ -122,7 +123,7 @@ int main(int argv, char **args)
             0,
             0,
             -5,
-            48,
+            42,
             62,
             79,
             58,
@@ -134,35 +135,58 @@ int main(int argv, char **args)
             &GS.manTexArray[1], 
             0,
             0,
-            0,
-            88,
+            13,
+            80,
             54,
             177,
             34,
             71 
             ); 
-    //right leg
+
+    GS.manTexArray[2].mEnableRotation = true;
+    GS.manTexArray[2].mRotState = 1;
+    GS.manTexArray[2].mRotMax = 20;
+    GS.manTexArray[2].mRotMin = -20;
+
+    GS.manTexArray[2].mCenter.x = 17;
+    GS.manTexArray[2].mCenter.y = 0;
+
+    //left leg
     GS.manTexArray[3] = InitTexturePart(GS.man,
             &GS.manTexArray[2], 
             0,
             0,
-            0,
-            70,
+            11,
+            65,
             58,
             259,
             27,
             62 
             ); 
-    
-    GS.manTexArray[2].mEnableRotation = true;
-    GS.manTexArray[2].mRotState = 1;
-    GS.manTexArray[2].mRotMax = 30;
-    GS.manTexArray[2].mRotMin = -30;
 
-    GS.manTexArray[2].mCenter.x = 27;
-    GS.manTexArray[2].mCenter.y = 0;
+    GS.manTexArray[3].mXrenderOffset = -11;
 
-    GS.manTexArray[3].mXrenderOffset = -(GS.manTexArray[2].mSrcRect.w/2);
+    //right thigh 
+    GS.manTexArray[4] = InitTexturePart(GS.man,
+            &GS.manTexArray[1], 
+            0,
+            0,
+            13,
+            80,
+            103,
+            173,
+            33,
+            67 
+            ); 
+
+    GS.manTexArray[4].mEnableRotation = true;
+    GS.manTexArray[4].mRotState = 1;
+    GS.manTexArray[4].mRotMax = -20;
+    GS.manTexArray[4].mRotMin = 20;
+
+    GS.manTexArray[4].mCenter.x = 17;
+    GS.manTexArray[4].mCenter.y = 0;
+
     /*
 
        audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);

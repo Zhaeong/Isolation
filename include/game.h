@@ -36,7 +36,7 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
 void RenderTexture(SDL_Renderer *renderer, Texture tex);
 
 void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex);
-
+void RenderTexturePartArray(SDL_Renderer *renderer, TexturePart *texturePartArray, int size);
 void RemoveTextureWhiteSpace(SDL_Texture *texture);
 
 AudioClip InitAudio(string filepath);
