@@ -18,6 +18,7 @@ using namespace std;
 
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
 
+extern bool ShowDebug;
 struct Texture
 {
     int mX;

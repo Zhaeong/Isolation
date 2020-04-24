@@ -10,6 +10,7 @@ const int FPS = 60;
 const int FrameDelay = 1000 / FPS;
 #endif 
 
+bool ShowDebug = true;
 SDL_AudioDeviceID audioDevice;
 
 void gameloop() 
@@ -36,6 +37,14 @@ void gameloop()
         switch (event.type) 
         {
             case SDL_KEYDOWN:
+                if(ShowDebug)
+                {
+                    ShowDebug = false;
+                }
+                else
+                {
+                    ShowDebug = true;
+                }
                 break;
             case SDL_KEYUP:
                 //cout << "pressed\n"; 
@@ -156,8 +165,8 @@ int main(int argv, char **args)
             &GS.manTexArray[2], 
             0,
             0,
-            11,
-            65,
+            9,
+            55,
             58,
             259,
             27,
@@ -165,6 +174,7 @@ int main(int argv, char **args)
             ); 
 
     GS.manTexArray[3].mXrenderOffset = -11;
+    GS.manTexArray[3].mRotation = 20;
 
     //right thigh 
     GS.manTexArray[4] = InitTexturePart(GS.man,
@@ -180,13 +190,28 @@ int main(int argv, char **args)
             ); 
 
     GS.manTexArray[4].mEnableRotation = true;
-    GS.manTexArray[4].mRotState = 1;
-    GS.manTexArray[4].mRotMax = -20;
-    GS.manTexArray[4].mRotMin = 20;
+    GS.manTexArray[4].mRotState = 2;
+    GS.manTexArray[4].mRotMax = 20;
+    GS.manTexArray[4].mRotMin = -20;
 
     GS.manTexArray[4].mCenter.x = 17;
     GS.manTexArray[4].mCenter.y = 0;
 
+    //right leg
+    GS.manTexArray[5] = InitTexturePart(GS.man,
+            &GS.manTexArray[4], 
+            0,
+            0,
+            9,
+            55,
+            114,
+            254,
+            26,
+            60 
+            ); 
+
+    GS.manTexArray[5].mXrenderOffset = -11;
+    GS.manTexArray[5].mRotation = 20;
     /*
 
        audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);

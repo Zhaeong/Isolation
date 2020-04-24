@@ -334,61 +334,64 @@ void RenderTexturePart(SDL_Renderer *renderer, TexturePart tex)
 
         SDL_RenderCopyEx(renderer, tex.mTexture, &tex.mSrcRect, &dstRect, tex.mRotation, &tex.mCenter, tex.mFlip);
 #ifdef DEBUG 
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+        if(ShowDebug)
+        {
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 
-        int midX = xPos + tex.mCenter.x;
-        int midY = yPos + tex.mCenter.y;
+            int midX = xPos + tex.mCenter.x;
+            int midY = yPos + tex.mCenter.y;
 
-        SDL_RenderDrawLine(renderer,
-                xPos,
-                yPos,
-                midX,
-                midY);
+            SDL_RenderDrawLine(renderer,
+                    xPos,
+                    yPos,
+                    midX,
+                    midY);
 
-        SDL_RenderDrawLine(renderer,
-                xPos,
-                yPos,
-                xPos,
-                yPos + tex.mSrcRect.h);
+            SDL_RenderDrawLine(renderer,
+                    xPos,
+                    yPos,
+                    xPos,
+                    yPos + tex.mSrcRect.h);
 
-        //Draw line of rotated start and end points
+            //Draw line of rotated start and end points
 
-        //Bounding of new 
-        SDL_Point startPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mRotation);
+            //Bounding of new 
+            SDL_Point startPoint = RotatePointByOtherPoint(xPos, yPos, midX, midY, tex.mRotation);
 
-        SDL_SetRenderDrawColor(renderer, 255, 200, 14, SDL_ALPHA_OPAQUE);
-        SDL_Point endPointVertical = RotatePointByOtherPoint(xPos, yPos + tex.mSrcRect.h, midX, midY, tex.mRotation); 
-        SDL_RenderDrawLine(renderer,
-                startPoint.x,
-                startPoint.y,
-                endPointVertical.x,
-                endPointVertical.y);
-        SDL_Point endPointHorizontal = RotatePointByOtherPoint(xPos + tex.mSrcRect.w, yPos, midX, midY, tex.mRotation); 
-        SDL_RenderDrawLine(renderer,
-                startPoint.x,
-                startPoint.y,
-                endPointHorizontal.x,
-                endPointHorizontal.y);
+            SDL_SetRenderDrawColor(renderer, 255, 200, 14, SDL_ALPHA_OPAQUE);
+            SDL_Point endPointVertical = RotatePointByOtherPoint(xPos, yPos + tex.mSrcRect.h, midX, midY, tex.mRotation); 
+            SDL_RenderDrawLine(renderer,
+                    startPoint.x,
+                    startPoint.y,
+                    endPointVertical.x,
+                    endPointVertical.y);
+            SDL_Point endPointHorizontal = RotatePointByOtherPoint(xPos + tex.mSrcRect.w, yPos, midX, midY, tex.mRotation); 
+            SDL_RenderDrawLine(renderer,
+                    startPoint.x,
+                    startPoint.y,
+                    endPointHorizontal.x,
+                    endPointHorizontal.y);
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderDrawLine(renderer,
-                startPoint.x,
-                startPoint.y,
-                midX,
-                midY);
-
-
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-        SDL_RenderDrawLine(renderer,
-                xPos,
-                yPos,
-                xPos + tex.mXrenderOffset,
-                yPos + tex.mYrenderOffset);
+            SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+            SDL_RenderDrawLine(renderer,
+                    startPoint.x,
+                    startPoint.y,
+                    midX,
+                    midY);
 
 
-        //cout << "inix: " << xPos << "iniy:" <<yPos + tex.mSrcRect.h<< "\n";
-        //cout << "endx: " << endPoint.x << "endy:" << endPoint.y << "\n";
+
+            SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
+            SDL_RenderDrawLine(renderer,
+                    xPos,
+                    yPos,
+                    xPos + tex.mXrenderOffset,
+                    yPos + tex.mYrenderOffset);
+
+
+            //cout << "inix: " << xPos << "iniy:" <<yPos + tex.mSrcRect.h<< "\n";
+            //cout << "endx: " << endPoint.x << "endy:" << endPoint.y << "\n";
+        }
 
 #endif
     }
@@ -545,6 +548,7 @@ void ProcessTexturePartArray(TexturePart *texturePartArray, int size)
         //Apply rotation based on struct vals
         if(tex.mEnableRotation)
         {
+            //cout << "tex: " << i << "roty: " << tex.mRotation << "\n";
             if(tex.mRotState == 1)
             {
                 if(tex.mRotation < tex.mRotMax)
