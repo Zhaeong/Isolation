@@ -97,6 +97,8 @@ struct GameState
 
     SDL_Texture *man;
     TexturePart manTexArray[ManTexArraySize];
+
+    string PlayerState;
 };
 
 

@@ -37,18 +37,40 @@ void gameloop()
         switch (event.type) 
         {
             case SDL_KEYDOWN:
-                if(ShowDebug)
+                switch(event.key.keysym.sym)
                 {
-                    ShowDebug = false;
-                }
-                else
-                {
-                    ShowDebug = true;
+                    case SDLK_0:
+                        {
+                            if(ShowDebug)
+                            {
+                                ShowDebug = false;
+                            }
+                            else
+                            {
+                                ShowDebug = true;
+                            }
+                            break;
+                        }
+                    case SDLK_d:
+                        {
+                            cout << "dd\n"; 
+                            GS.PlayerState = "RIGHT";
+                            break;
+                        }
+                    case SDLK_a:
+                        {
+                            cout << "aa\n"; 
+                            GS.PlayerState = "LEFT";
+                            break;
+                        }
                 }
                 break;
             case SDL_KEYUP:
                 //cout << "pressed\n"; 
-                break;
+                {
+                    GS.PlayerState = "IDLE";
+                    break;
+                }
             case SDL_MOUSEBUTTONDOWN:
                 //cout << "MOUSE_DOWN \n";
                 GS.manTexArray[0].mX += 1;
@@ -67,6 +89,14 @@ void gameloop()
         }
     }
 
+    if(GS.PlayerState == "LEFT")
+    {
+        GS.manTexArray[0].mX -= 1;
+    }
+    else if(GS.PlayerState == "RIGHT")
+    {
+        GS.manTexArray[0].mX += 1;
+    }
     ProcessTexturePartArray(GS.manTexArray, ManTexArraySize);
     //GS.manTexArray[0].mRotation += 1;
     //GS.manTexArray[1].mRotation -= 1;
@@ -74,11 +104,7 @@ void gameloop()
 
     //Render Code
     RenderTexturePartArray(GS.renderer, GS.manTexArray, ManTexArraySize);
-    //RenderTexturePart(GS.renderer, GS.manTexArray[0]);
-    //RenderTexturePart(GS.renderer, GS.manTexArray[1]);
-    //RenderTexturePart(GS.renderer, GS.manTexArray[2]);
-    //RenderTexturePart(GS.renderer, GS.manTexArray[3]);
-    //RenderTexturePart(GS.renderer, GS.manTexArray[4]);
+
 
     ////////////////////////////////////////////////////////////////////////
     //End of main game code
@@ -109,6 +135,7 @@ int main(int argv, char **args)
     GS.man = GetSDLTexture(GS.renderer, GS.window, "./res/png/man.png");
     RemoveTextureWhiteSpace(GS.man);
     GS.State = "START";
+    GS.PlayerState = "IDLE";
     GS.screenColor.r = 0;
     GS.screenColor.g = 0;
     GS.screenColor.b = 0;
