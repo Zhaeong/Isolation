@@ -18,7 +18,22 @@ using namespace std;
 
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
 
+//Player array posits
+
+const int HEAD_INDEX = 0;
+const int BODY_INDEX = 1;
+const int LEFT_THIGH_INDEX = 2;
+const int LEFT_LEG_INDEX = 3;
+const int LEFT_FOOT = 4;
+const int RIGHT_THIGH_INDEX = 5;
+const int RIGHT_LEG_INDEX = 6;
+const int RIGHT_FOOT = 7;
+
+
+
+//Declared as extern so that it's shared between files
 extern bool ShowDebug;
+
 struct Texture
 {
     int mX;

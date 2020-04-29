@@ -142,7 +142,7 @@ int main(int argv, char **args)
     GS.screenColor.a = 255;
 
     //Head
-    GS.manTexArray[0] = InitTexturePart(GS.man,
+    GS.manTexArray[HEAD_INDEX] = InitTexturePart(GS.man,
             NULL,
             0,
             0,
@@ -154,8 +154,8 @@ int main(int argv, char **args)
             48 
             ); 
     //Body
-    GS.manTexArray[1] = InitTexturePart(GS.man,
-            &GS.manTexArray[0], 
+    GS.manTexArray[BODY_INDEX] = InitTexturePart(GS.man,
+            &GS.manTexArray[HEAD_INDEX], 
             0,
             0,
             -5,
@@ -167,8 +167,8 @@ int main(int argv, char **args)
             ); 
 
     //left thigh 
-    GS.manTexArray[2] = InitTexturePart(GS.man,
-            &GS.manTexArray[1], 
+    GS.manTexArray[LEFT_THIGH_INDEX] = InitTexturePart(GS.man,
+            &GS.manTexArray[BODY_INDEX], 
             0,
             0,
             13,
@@ -179,17 +179,17 @@ int main(int argv, char **args)
             71 
             ); 
 
-    GS.manTexArray[2].mEnableRotation = true;
-    GS.manTexArray[2].mRotState = 1;
-    GS.manTexArray[2].mRotMax = 20;
-    GS.manTexArray[2].mRotMin = -20;
+    GS.manTexArray[LEFT_THIGH_INDEX].mEnableRotation = true;
+    GS.manTexArray[LEFT_THIGH_INDEX].mRotState = 1;
+    GS.manTexArray[LEFT_THIGH_INDEX].mRotMax = 20;
+    GS.manTexArray[LEFT_THIGH_INDEX].mRotMin = -20;
 
-    GS.manTexArray[2].mCenter.x = 17;
-    GS.manTexArray[2].mCenter.y = 0;
+    GS.manTexArray[LEFT_THIGH_INDEX].mCenter.x = 17;
+    GS.manTexArray[LEFT_THIGH_INDEX].mCenter.y = 0;
 
     //left leg
-    GS.manTexArray[3] = InitTexturePart(GS.man,
-            &GS.manTexArray[2], 
+    GS.manTexArray[LEFT_LEG_INDEX] = InitTexturePart(GS.man,
+            &GS.manTexArray[LEFT_THIGH_INDEX], 
             0,
             0,
             9,
@@ -200,12 +200,25 @@ int main(int argv, char **args)
             62 
             ); 
 
-    GS.manTexArray[3].mXrenderOffset = -11;
-    GS.manTexArray[3].mRotation = 20;
+    GS.manTexArray[LEFT_LEG_INDEX].mXrenderOffset = -11;
+    GS.manTexArray[LEFT_LEG_INDEX].mRotation = 20;
+
+    //left foot
+    GS.manTexArray[LEFT_FOOT] = InitTexturePart(GS.man,
+            &GS.manTexArray[LEFT_LEG_INDEX], 
+            0,
+            0,
+            -5,
+            60,
+            47,
+            334,
+            36,
+            26 
+            ); 
 
     //right thigh 
-    GS.manTexArray[4] = InitTexturePart(GS.man,
-            &GS.manTexArray[1], 
+    GS.manTexArray[RIGHT_THIGH_INDEX] = InitTexturePart(GS.man,
+            &GS.manTexArray[BODY_INDEX], 
             0,
             0,
             13,
@@ -216,17 +229,17 @@ int main(int argv, char **args)
             67 
             ); 
 
-    GS.manTexArray[4].mEnableRotation = true;
-    GS.manTexArray[4].mRotState = 2;
-    GS.manTexArray[4].mRotMax = 20;
-    GS.manTexArray[4].mRotMin = -20;
+    GS.manTexArray[RIGHT_THIGH_INDEX].mEnableRotation = true;
+    GS.manTexArray[RIGHT_THIGH_INDEX].mRotState = 2;
+    GS.manTexArray[RIGHT_THIGH_INDEX].mRotMax = 20;
+    GS.manTexArray[RIGHT_THIGH_INDEX].mRotMin = -20;
 
-    GS.manTexArray[4].mCenter.x = 17;
-    GS.manTexArray[4].mCenter.y = 0;
+    GS.manTexArray[RIGHT_THIGH_INDEX].mCenter.x = 17;
+    GS.manTexArray[RIGHT_THIGH_INDEX].mCenter.y = 0;
 
     //right leg
-    GS.manTexArray[5] = InitTexturePart(GS.man,
-            &GS.manTexArray[4], 
+    GS.manTexArray[RIGHT_LEG_INDEX] = InitTexturePart(GS.man,
+            &GS.manTexArray[RIGHT_THIGH_INDEX], 
             0,
             0,
             9,
@@ -237,8 +250,24 @@ int main(int argv, char **args)
             60 
             ); 
 
-    GS.manTexArray[5].mXrenderOffset = -11;
-    GS.manTexArray[5].mRotation = 20;
+    GS.manTexArray[RIGHT_LEG_INDEX].mXrenderOffset = -11;
+    GS.manTexArray[RIGHT_LEG_INDEX].mRotation = 20;
+
+    //right foot
+    GS.manTexArray[RIGHT_FOOT] = InitTexturePart(GS.man,
+            &GS.manTexArray[RIGHT_LEG_INDEX], 
+            0,
+            0,
+            -5,
+            60,
+            119,
+            330,
+            38,
+            26 
+            ); 
+
+
+
     /*
 
        audioDevice = SDL_OpenAudioDevice(NULL, 0, &ToddlerMus.wavSpec, NULL, 0);
