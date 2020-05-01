@@ -141,8 +141,10 @@ int main(int argv, char **args)
     GS.screenColor.b = 0;
     GS.screenColor.a = 255;
 
+
+
     //Head
-    GS.manTexArray[HEAD_INDEX] = InitTexturePart(GS.man,
+    GS.manTexArray[HEAD] = InitTexturePart(GS.man,
             NULL,
             0,
             0,
@@ -154,8 +156,8 @@ int main(int argv, char **args)
             48 
             ); 
     //Body
-    GS.manTexArray[BODY_INDEX] = InitTexturePart(GS.man,
-            &GS.manTexArray[HEAD_INDEX], 
+    GS.manTexArray[BODY] = InitTexturePart(GS.man,
+            &GS.manTexArray[HEAD], 
             0,
             0,
             -5,
@@ -167,8 +169,8 @@ int main(int argv, char **args)
             ); 
 
     //left thigh 
-    GS.manTexArray[LEFT_THIGH_INDEX] = InitTexturePart(GS.man,
-            &GS.manTexArray[BODY_INDEX], 
+    GS.manTexArray[LEFT_THIGH] = InitTexturePart(GS.man,
+            &GS.manTexArray[BODY], 
             0,
             0,
             13,
@@ -179,20 +181,20 @@ int main(int argv, char **args)
             71 
             ); 
 
-    GS.manTexArray[LEFT_THIGH_INDEX].mEnableRotation = true;
-    GS.manTexArray[LEFT_THIGH_INDEX].mRotState = 1;
-    GS.manTexArray[LEFT_THIGH_INDEX].mRotMax = 20;
-    GS.manTexArray[LEFT_THIGH_INDEX].mRotMin = -20;
+    GS.manTexArray[LEFT_THIGH].mEnableRotation = true;
+    GS.manTexArray[LEFT_THIGH].mRotState = 1;
+    GS.manTexArray[LEFT_THIGH].mRotMax = 20;
+    GS.manTexArray[LEFT_THIGH].mRotMin = -20;
 
-    GS.manTexArray[LEFT_THIGH_INDEX].mCenter.x = 17;
-    GS.manTexArray[LEFT_THIGH_INDEX].mCenter.y = 0;
+    GS.manTexArray[LEFT_THIGH].mCenter.x = 17;
+    GS.manTexArray[LEFT_THIGH].mCenter.y = 0;
 
     //left leg
-    GS.manTexArray[LEFT_LEG_INDEX] = InitTexturePart(GS.man,
-            &GS.manTexArray[LEFT_THIGH_INDEX], 
+    GS.manTexArray[LEFT_LEG] = InitTexturePart(GS.man,
+            &GS.manTexArray[LEFT_THIGH], 
             0,
             0,
-            9,
+            15,
             55,
             58,
             259,
@@ -200,15 +202,15 @@ int main(int argv, char **args)
             62 
             ); 
 
-    GS.manTexArray[LEFT_LEG_INDEX].mXrenderOffset = -11;
-    GS.manTexArray[LEFT_LEG_INDEX].mRotation = 20;
+    GS.manTexArray[LEFT_LEG].mXrenderOffset = -18;
+    GS.manTexArray[LEFT_LEG].mRotation = 20;
 
     //left foot
     GS.manTexArray[LEFT_FOOT] = InitTexturePart(GS.man,
-            &GS.manTexArray[LEFT_LEG_INDEX], 
+            &GS.manTexArray[LEFT_LEG], 
             0,
             0,
-            -5,
+            -15,
             60,
             47,
             334,
@@ -217,52 +219,151 @@ int main(int argv, char **args)
             ); 
 
     //right thigh 
-    GS.manTexArray[RIGHT_THIGH_INDEX] = InitTexturePart(GS.man,
-            &GS.manTexArray[BODY_INDEX], 
+    GS.manTexArray[RIGHT_THIGH] = InitTexturePart(GS.man,
+            &GS.manTexArray[BODY], 
             0,
             0,
             13,
             80,
-            103,
-            173,
-            33,
-            67 
+            54,
+            177,
+            34,
+            71 
             ); 
 
-    GS.manTexArray[RIGHT_THIGH_INDEX].mEnableRotation = true;
-    GS.manTexArray[RIGHT_THIGH_INDEX].mRotState = 2;
-    GS.manTexArray[RIGHT_THIGH_INDEX].mRotMax = 20;
-    GS.manTexArray[RIGHT_THIGH_INDEX].mRotMin = -20;
+    GS.manTexArray[RIGHT_THIGH].mEnableRotation = true;
+    GS.manTexArray[RIGHT_THIGH].mRotState = 2;
+    GS.manTexArray[RIGHT_THIGH].mRotMax = 20;
+    GS.manTexArray[RIGHT_THIGH].mRotMin = -20;
 
-    GS.manTexArray[RIGHT_THIGH_INDEX].mCenter.x = 17;
-    GS.manTexArray[RIGHT_THIGH_INDEX].mCenter.y = 0;
+    GS.manTexArray[RIGHT_THIGH].mCenter.x = 17;
+    GS.manTexArray[RIGHT_THIGH].mCenter.y = 0;
 
     //right leg
-    GS.manTexArray[RIGHT_LEG_INDEX] = InitTexturePart(GS.man,
-            &GS.manTexArray[RIGHT_THIGH_INDEX], 
+    GS.manTexArray[RIGHT_LEG] = InitTexturePart(GS.man,
+            &GS.manTexArray[RIGHT_THIGH], 
             0,
             0,
-            9,
+            15,
             55,
-            114,
-            254,
-            26,
-            60 
+            58,
+            259,
+            27,
+            62 
             ); 
 
-    GS.manTexArray[RIGHT_LEG_INDEX].mXrenderOffset = -11;
-    GS.manTexArray[RIGHT_LEG_INDEX].mRotation = 20;
+    GS.manTexArray[RIGHT_LEG].mXrenderOffset = -18;
+    GS.manTexArray[RIGHT_LEG].mRotation = 20;
 
     //right foot
     GS.manTexArray[RIGHT_FOOT] = InitTexturePart(GS.man,
-            &GS.manTexArray[RIGHT_LEG_INDEX], 
+            &GS.manTexArray[RIGHT_LEG], 
             0,
             0,
-            -5,
+            -15,
             60,
-            119,
-            330,
-            38,
+            47,
+            334,
+            36,
+            26 
+            ); 
+
+    //left upper Arm
+    GS.manTexArray[LEFT_UARM] = InitTexturePart(GS.man,
+            &GS.manTexArray[BODY], 
+            0,
+            0,
+            15,
+            10,
+            6,
+            81,
+            23,
+            52 
+            ); 
+    GS.manTexArray[LEFT_UARM].mEnableRotation = true;
+    GS.manTexArray[LEFT_UARM].mRotState = 1;
+    GS.manTexArray[LEFT_UARM].mRotMax = 20;
+    GS.manTexArray[LEFT_UARM].mRotMin = -20;
+    GS.manTexArray[LEFT_UARM].mCenter.x = 11;
+    GS.manTexArray[LEFT_UARM].mCenter.y = 0;
+
+    //left Arm
+    GS.manTexArray[LEFT_ARM] = InitTexturePart(GS.man,
+            &GS.manTexArray[LEFT_UARM], 
+            0,
+            0,
+            12,
+            45,
+            12,
+            142,
+            19,
+            37 
+            ); 
+    GS.manTexArray[LEFT_ARM].mEnableRotation = true;
+    GS.manTexArray[LEFT_ARM].mXrenderOffset = -2;
+    GS.manTexArray[LEFT_ARM].mRotation = 0;
+    GS.manTexArray[LEFT_ARM].mRotState = 1;
+    GS.manTexArray[LEFT_ARM].mRotMax = 10;
+    GS.manTexArray[LEFT_ARM].mRotMin = -40;
+    GS.manTexArray[LEFT_ARM].mCenter.x = 11;
+    GS.manTexArray[LEFT_ARM].mCenter.y = 0;
+    //left hand
+    GS.manTexArray[LEFT_HAND] = InitTexturePart(GS.man,
+            &GS.manTexArray[LEFT_ARM], 
+            0,
+            0,
+            -2,
+            24,
+            4,
+            192,
+            24,
+            26 
+            ); 
+
+    //right upper Arm
+    GS.manTexArray[RIGHT_UARM] = InitTexturePart(GS.man,
+            &GS.manTexArray[BODY], 
+            0,
+            0,
+            15,
+            10,
+            6,
+            81,
+            23,
+            52 
+            ); 
+    GS.manTexArray[RIGHT_UARM].mEnableRotation = true;
+    GS.manTexArray[RIGHT_UARM].mRotState = 2;
+    GS.manTexArray[RIGHT_UARM].mRotMax = 20;
+    GS.manTexArray[RIGHT_UARM].mRotMin = -20;
+    GS.manTexArray[RIGHT_UARM].mCenter.x = 11;
+    GS.manTexArray[RIGHT_UARM].mCenter.y = 0;
+
+    //right Arm
+    GS.manTexArray[RIGHT_ARM] = InitTexturePart(GS.man,
+            &GS.manTexArray[RIGHT_UARM], 
+            0,
+            0,
+            12,
+            45,
+            12,
+            142,
+            19,
+            37 
+            ); 
+    GS.manTexArray[RIGHT_ARM].mXrenderOffset = -2;
+    GS.manTexArray[RIGHT_ARM].mRotation = -40;
+
+    //right hand
+    GS.manTexArray[RIGHT_HAND] = InitTexturePart(GS.man,
+            &GS.manTexArray[RIGHT_ARM], 
+            0,
+            0,
+            -2,
+            24,
+            4,
+            192,
+            24,
             26 
             ); 
 

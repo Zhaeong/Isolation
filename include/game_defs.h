@@ -19,16 +19,24 @@ using namespace std;
 const Uint32 TEXTUREFORMAT = SDL_PIXELFORMAT_RGBA8888;
 
 //Player array posits
+const int ManTexArraySize = 14;
+//Denotes the render order
+const int HEAD = 0;
 
-const int HEAD_INDEX = 0;
-const int BODY_INDEX = 1;
-const int LEFT_THIGH_INDEX = 2;
-const int LEFT_LEG_INDEX = 3;
-const int LEFT_FOOT = 4;
-const int RIGHT_THIGH_INDEX = 5;
-const int RIGHT_LEG_INDEX = 6;
-const int RIGHT_FOOT = 7;
+const int RIGHT_UARM = 2;
+const int RIGHT_ARM = 1;
+const int RIGHT_HAND = 3;
 
+const int BODY = 4;
+const int LEFT_THIGH = 6;
+const int LEFT_LEG = 5;
+const int LEFT_FOOT = 7;
+const int RIGHT_THIGH = 9;
+const int RIGHT_LEG = 8;
+const int RIGHT_FOOT = 10;
+const int LEFT_UARM = 12;
+const int LEFT_ARM = 11;
+const int LEFT_HAND = 13;
 
 
 //Declared as extern so that it's shared between files
@@ -101,7 +109,7 @@ struct AudioClip
 };
 
 
-const int ManTexArraySize = 10;
+
 struct GameState
 {
     string State;
