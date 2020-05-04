@@ -281,9 +281,9 @@ int main(int argv, char **args)
             52 
             ); 
     GS.manTexArray[LEFT_UARM].mEnableRotation = true;
-    GS.manTexArray[LEFT_UARM].mRotState = 1;
-    GS.manTexArray[LEFT_UARM].mRotMax = 20;
-    GS.manTexArray[LEFT_UARM].mRotMin = -20;
+    GS.manTexArray[LEFT_UARM].mRotState = 2;
+    GS.manTexArray[LEFT_UARM].mRotMax = 30;
+    GS.manTexArray[LEFT_UARM].mRotMin = -30;
     GS.manTexArray[LEFT_UARM].mCenter.x = 11;
     GS.manTexArray[LEFT_UARM].mCenter.y = 0;
 
@@ -302,9 +302,11 @@ int main(int argv, char **args)
     GS.manTexArray[LEFT_ARM].mEnableRotation = true;
     GS.manTexArray[LEFT_ARM].mXrenderOffset = -2;
     GS.manTexArray[LEFT_ARM].mRotation = 0;
-    GS.manTexArray[LEFT_ARM].mRotState = 1;
-    GS.manTexArray[LEFT_ARM].mRotMax = 10;
-    GS.manTexArray[LEFT_ARM].mRotMin = -40;
+    GS.manTexArray[LEFT_ARM].mRotState = 5;
+    GS.manTexArray[LEFT_ARM].mParentRotAngleMax = 20;
+    GS.manTexArray[LEFT_ARM].mParentRotAngleMin = -20;
+    GS.manTexArray[LEFT_ARM].mRotMax = 20;
+    GS.manTexArray[LEFT_ARM].mRotMin = -20;
     GS.manTexArray[LEFT_ARM].mCenter.x = 11;
     GS.manTexArray[LEFT_ARM].mCenter.y = 0;
     //left hand

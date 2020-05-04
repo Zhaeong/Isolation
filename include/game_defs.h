@@ -86,8 +86,11 @@ struct TexturePart
     //2 for right
     int mRotState;
 
-    //When to begin rotation
-    int mParentRotAngleStart;
+    //When to begin rotation towards max or min
+    double mParentRotAngleMax;
+    double mParentRotAngleMin;
+    bool mRotMaxStart;
+    bool mRotMinStart;
 
     double mRotSpeed;
     int mRotMax;

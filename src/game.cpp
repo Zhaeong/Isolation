@@ -248,7 +248,10 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
     //Rotation
     outTex.mEnableRotation = false;
     outTex.mRotState = 0;
-    outTex.mParentRotAngleStart = 0;
+    outTex.mParentRotAngleMax = 0;
+    outTex.mParentRotAngleMin = 0;
+    outTex.mRotMaxStart = false;
+    outTex.mRotMinStart = false;
     outTex.mRotSpeed = 0.5;
     outTex.mRotMax = 0;
     outTex.mRotMin = 0;
@@ -549,29 +552,92 @@ void ProcessTexturePartArray(TexturePart *texturePartArray, int size)
         if(tex.mEnableRotation)
         {
             //cout << "tex: " << i << "roty: " << tex.mRotation << "\n";
-            if(tex.mRotState == 1)
-            {
-                if(tex.mRotation < tex.mRotMax)
-                {
-                    tex.mRotation += tex.mRotSpeed;
-                }
-                else
-                {
-                    tex.mRotState = 2;
-                }
-            }
-            else if(tex.mRotState == 2)
-            {
-                if(tex.mRotation > tex.mRotMin)
-                {
-                    tex.mRotation -= tex.mRotSpeed;
-                }
-                else
-                {
-                    tex.mRotState = 1;
-                }
 
+            switch (tex.mRotState)
+            {
+                case 1: // 1 means to rotate clockwise, then counter
+                    {
+                        if(tex.mRotation < tex.mRotMax)
+                        {
+                            tex.mRotation += tex.mRotSpeed;
+                        }
+                        else
+                        {
+                            tex.mRotState = 2;
+                        }
+
+                        break;
+                    }
+                case 2: // 2 means counter then clock
+                    {
+                        if(tex.mRotation > tex.mRotMin)
+                        {
+                            tex.mRotation -= tex.mRotSpeed;
+                        }
+                        else
+                        {
+                            tex.mRotState = 1;
+                        }
+
+                        break;
+                    }
+                case 3: // means to clockwise to max then stop
+                    {
+                        if(tex.mRotation < tex.mRotMax)
+                        {
+                            tex.mRotation += tex.mRotSpeed;
+                        }
+                        break;
+                    }
+                case 4: // means to conter to min then stop
+                    {
+                        if(tex.mRotation > tex.mRotMin)
+                        {
+                            tex.mRotation -= tex.mRotSpeed;
+                        }
+                        break;
+                    }
+                case 5: //when parent reaches certain angle begin Rotation clockwise, stop after max
+                    {
+                        if(tex.mReferenceTexture != NULL)
+                        {
+                            if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMax)
+                            {
+                                tex.mRotMaxStart = true; 
+                            }
+                            else if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMin)
+                            {
+                                tex.mRotMinStart = true;
+                                //cout << "mini:" << tex.mReferenceTexture->mRotation <<"\n";
+                            }
+                        }
+                        if(tex.mRotMaxStart)
+                        {
+                            if(tex.mRotation < tex.mRotMax)
+                            {
+                                tex.mRotation += tex.mRotSpeed;
+                            }
+                            else
+                            {
+                                tex.mRotMaxStart = false;
+                            }
+                        }
+                        else if(tex.mRotMinStart)
+                        {
+                            if(tex.mRotation > tex.mRotMin)
+                            {
+                                tex.mRotation -= tex.mRotSpeed;
+                            }
+                            else
+                            {
+                                tex.mRotMinStart = false;
+                            }
+                        }
+
+                        break;
+                    }
             }
+
         }
         texturePartArray[i] = tex;
     }
