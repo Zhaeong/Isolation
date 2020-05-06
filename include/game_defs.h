@@ -80,8 +80,7 @@ struct TexturePart
 
     //Rotation specific variables
 
-    bool mEnableRotation;
-    //0 for still,
+    //0 for still, no rotation
     //1 for left
     //2 for right
     int mRotState;
@@ -125,6 +124,9 @@ struct GameState
     TexturePart manTexArray[ManTexArraySize];
 
     string PlayerState;
+
+    //Debugging
+    int curSelectedTexturePart;
 };
 
 

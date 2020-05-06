@@ -246,7 +246,6 @@ TexturePart InitTexturePart(SDL_Texture *sdlTexture,
     outTex.mFlip = SDL_FLIP_NONE;
 
     //Rotation
-    outTex.mEnableRotation = false;
     outTex.mRotState = 0;
     outTex.mParentRotAngleMax = 0;
     outTex.mParentRotAngleMin = 0;
@@ -548,14 +547,71 @@ void ProcessTexturePartArray(TexturePart *texturePartArray, int size)
 
         }
 
-        //Apply rotation based on struct vals
-        if(tex.mEnableRotation)
+        //cout << "tex: " << i << "roty: " << tex.mRotation << "\n";
+
+        switch (tex.mRotState)
         {
-            //cout << "tex: " << i << "roty: " << tex.mRotation << "\n";
+            case 0:
+                {
+                    break;
+                }
+            case 1: // 1 means to rotate clockwise, then counter
+                {
+                    if(tex.mRotation < tex.mRotMax)
+                    {
+                        tex.mRotation += tex.mRotSpeed;
+                    }
+                    else
+                    {
+                        tex.mRotState = 2;
+                    }
 
-            switch (tex.mRotState)
-            {
-                case 1: // 1 means to rotate clockwise, then counter
+                    break;
+                }
+            case 2: // 2 means counter then clock
+                {
+                    if(tex.mRotation > tex.mRotMin)
+                    {
+                        tex.mRotation -= tex.mRotSpeed;
+                    }
+                    else
+                    {
+                        tex.mRotState = 1;
+                    }
+
+                    break;
+                }
+            case 3: // means to clockwise to max then stop
+                {
+                    if(tex.mRotation < tex.mRotMax)
+                    {
+                        tex.mRotation += tex.mRotSpeed;
+                    }
+                    break;
+                }
+            case 4: // means to conter to min then stop
+                {
+                    if(tex.mRotation > tex.mRotMin)
+                    {
+                        tex.mRotation -= tex.mRotSpeed;
+                    }
+                    break;
+                }
+            case 5: //when parent reaches certain angle begin Rotation clockwise, stop after max
+                {
+                    if(tex.mReferenceTexture != NULL)
+                    {
+                        if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMax)
+                        {
+                            tex.mRotMaxStart = true; 
+                        }
+                        else if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMin)
+                        {
+                            tex.mRotMinStart = true;
+                            cout << "mini:" << tex.mReferenceTexture->mRotation <<"\n";
+                        }
+                    }
+                    if(tex.mRotMaxStart)
                     {
                         if(tex.mRotation < tex.mRotMax)
                         {
@@ -563,82 +619,88 @@ void ProcessTexturePartArray(TexturePart *texturePartArray, int size)
                         }
                         else
                         {
-                            tex.mRotState = 2;
+                            tex.mRotMaxStart = false;
                         }
-
-                        break;
                     }
-                case 2: // 2 means counter then clock
+                    else if(tex.mRotMinStart)
                     {
                         if(tex.mRotation > tex.mRotMin)
                         {
                             tex.mRotation -= tex.mRotSpeed;
+
                         }
                         else
                         {
-                            tex.mRotState = 1;
+                            tex.mRotMinStart = false;
                         }
-
-                        break;
                     }
-                case 3: // means to clockwise to max then stop
+
+                    break;
+                }
+            case 6: //when parent reaches certain angle begin Rotation clockwise, continue 
+                {
+                    if(tex.mReferenceTexture != NULL)
+                    {
+                        if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMax)
+                        {
+                            tex.mRotMaxStart = true; 
+                            tex.mRotMinStart = false;
+                        }
+                        else if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMin)
+                        {
+                            tex.mRotMinStart = true;
+                            tex.mRotMaxStart = false;
+                            cout << "mini:" << tex.mReferenceTexture->mRotation <<"\n";
+                        }
+                    }
+                    if(tex.mRotMaxStart)
                     {
                         if(tex.mRotation < tex.mRotMax)
                         {
                             tex.mRotation += tex.mRotSpeed;
                         }
-                        break;
+                        else
+                        {
+                            tex.mRotMaxStart = false;
+                            tex.mRotMinStart = false;
+                        }
                     }
-                case 4: // means to conter to min then stop
+                    else if(tex.mRotMinStart)
                     {
                         if(tex.mRotation > tex.mRotMin)
                         {
                             tex.mRotation -= tex.mRotSpeed;
-                        }
-                        break;
-                    }
-                case 5: //when parent reaches certain angle begin Rotation clockwise, stop after max
-                    {
-                        if(tex.mReferenceTexture != NULL)
-                        {
-                            if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMax)
-                            {
-                                tex.mRotMaxStart = true; 
-                            }
-                            else if(tex.mReferenceTexture->mRotation == tex.mParentRotAngleMin)
-                            {
-                                tex.mRotMinStart = true;
-                                //cout << "mini:" << tex.mReferenceTexture->mRotation <<"\n";
-                            }
-                        }
-                        if(tex.mRotMaxStart)
-                        {
-                            if(tex.mRotation < tex.mRotMax)
-                            {
-                                tex.mRotation += tex.mRotSpeed;
-                            }
-                            else
-                            {
-                                tex.mRotMaxStart = false;
-                            }
-                        }
-                        else if(tex.mRotMinStart)
-                        {
-                            if(tex.mRotation > tex.mRotMin)
-                            {
-                                tex.mRotation -= tex.mRotSpeed;
-                            }
-                            else
-                            {
-                                tex.mRotMinStart = false;
-                            }
-                        }
 
-                        break;
+                        }
+                        else
+                        {
+                            tex.mRotMinStart = false;
+                            tex.mRotMaxStart = true;
+                        }
                     }
-            }
+
+                    break;
+                }
 
         }
         texturePartArray[i] = tex;
     }
+}
+
+
+int TexturePartMouseCollision(TexturePart *texturePartArray, int size, int mouseX, int mouseY)
+{
+    for(int i = size - 1; i >= 0; i--)
+    {
+
+        TexturePart tex = texturePartArray[i];
+        if(mouseX >= tex.mX 
+                && mouseX <= (tex.mX + tex.mSrcRect.w) 
+                && mouseY >= tex.mY
+                && mouseY <= (tex.mY + tex.mSrcRect.h))
+        {
+            return i; 
+        }
+    }
+    return -1;
 }

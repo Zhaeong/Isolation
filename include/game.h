@@ -51,5 +51,7 @@ SDL_Point RotatePointByOtherPoint(int inX,
 
 void ProcessTexturePartArray(TexturePart *texturePartArray, int size);
 
+int TexturePartMouseCollision(TexturePart *texturePartArray, int size, int mouseX, int mouseY);
+
 #endif // GAME_H
  

@@ -29,8 +29,8 @@ void gameloop()
     ////////////////////////////////////////////////////////////////////////
     //Main Game Code
     ////////////////////////////////////////////////////////////////////////
-    int xMouse = 0;
-    int yMouse = 0;
+    int mouseX = 0;
+    int mouseY = 0;
     SDL_Event event;
     while (SDL_PollEvent(&event)) 
     {
@@ -63,6 +63,38 @@ void gameloop()
                             GS.PlayerState = "LEFT";
                             break;
                         }
+                        //Debug keysym
+                    case SDLK_p:
+                        {
+                            cout << "==========INFO: " << GS.curSelectedTexturePart << "========\n";
+                            cout << "Rotation: " << GS.manTexArray[GS.curSelectedTexturePart].mRotation << "\n"; 
+                            cout << "RotMax: " << GS.manTexArray[GS.curSelectedTexturePart].mRotMax << "\n"; 
+                            cout << "RotMin: " << GS.manTexArray[GS.curSelectedTexturePart].mRotMin << "\n"; 
+                            cout << "mParentRotAngleMax: " << GS.manTexArray[GS.curSelectedTexturePart].mParentRotAngleMax << "\n"; 
+                            cout << "mParentRotAngleMin: " << GS.manTexArray[GS.curSelectedTexturePart].mParentRotAngleMin << "\n"; 
+                            cout << "=========================\n";
+                            break;
+                        }
+                    case SDLK_1:
+                        {
+                            GS.manTexArray[GS.curSelectedTexturePart].mRotMax += 1;
+                            break;
+                        }
+                    case SDLK_2:
+                        {
+                            GS.manTexArray[GS.curSelectedTexturePart].mRotMax -= 1;
+                            break;
+                        }
+                    case SDLK_3:
+                        {
+                            GS.manTexArray[GS.curSelectedTexturePart].mRotMin += 1;
+                            break;
+                        }
+                    case SDLK_4:
+                        {
+                            GS.manTexArray[GS.curSelectedTexturePart].mRotMin -= 1;
+                            break;
+                        }
                 }
                 break;
             case SDL_KEYUP:
@@ -78,16 +110,18 @@ void gameloop()
                 break;
             case SDL_MOUSEBUTTONUP:
                 //cout <<  "MOUSE_UP\n";
-                SDL_GetMouseState(&xMouse, &yMouse);
-                cout << "mouseX: " << xMouse << " mouseY: " << yMouse << "\n";
+                SDL_GetMouseState(&mouseX, &mouseY);
+                cout << "mouseX: " << mouseX << " mouseY: " << mouseY << "\n";
                 //SDL_Point mousePoint = {xMouse, yMouse};
-
+                GS.curSelectedTexturePart = TexturePartMouseCollision(GS.manTexArray, ManTexArraySize, mouseX, mouseY);
+                cout << "CurTexture: " << GS.curSelectedTexturePart << "\n";
                 break;
             case SDL_QUIT:
                 exit(0);
                 break;
         }
     }
+
 
     if(GS.PlayerState == "LEFT")
     {
@@ -141,7 +175,7 @@ int main(int argv, char **args)
     GS.screenColor.b = 0;
     GS.screenColor.a = 255;
 
-
+    GS.curSelectedTexturePart = 0;
 
     //Head
     GS.manTexArray[HEAD] = InitTexturePart(GS.man,
@@ -181,10 +215,9 @@ int main(int argv, char **args)
             71 
             ); 
 
-    GS.manTexArray[LEFT_THIGH].mEnableRotation = true;
     GS.manTexArray[LEFT_THIGH].mRotState = 1;
     GS.manTexArray[LEFT_THIGH].mRotMax = 20;
-    GS.manTexArray[LEFT_THIGH].mRotMin = -20;
+    GS.manTexArray[LEFT_THIGH].mRotMin = -30;
 
     GS.manTexArray[LEFT_THIGH].mCenter.x = 17;
     GS.manTexArray[LEFT_THIGH].mCenter.y = 0;
@@ -202,21 +235,29 @@ int main(int argv, char **args)
             62 
             ); 
 
-    GS.manTexArray[LEFT_LEG].mXrenderOffset = -18;
+    GS.manTexArray[LEFT_LEG].mXrenderOffset = -10;
     GS.manTexArray[LEFT_LEG].mRotation = 20;
+    GS.manTexArray[LEFT_LEG].mRotState = 6;
+    GS.manTexArray[LEFT_LEG].mParentRotAngleMax = 20;
+    GS.manTexArray[LEFT_LEG].mParentRotAngleMin = -20;
+    GS.manTexArray[LEFT_LEG].mRotMax = 30;
+    GS.manTexArray[LEFT_LEG].mRotMin = 0;
+    GS.manTexArray[LEFT_LEG].mCenter.x = 13;
+    GS.manTexArray[LEFT_LEG].mCenter.y = 0;
 
     //left foot
     GS.manTexArray[LEFT_FOOT] = InitTexturePart(GS.man,
             &GS.manTexArray[LEFT_LEG], 
             0,
             0,
-            -15,
+            -5,
             60,
             47,
             334,
             36,
             26 
             ); 
+    GS.manTexArray[LEFT_FOOT].mYrenderOffset = -10;
 
     //right thigh 
     GS.manTexArray[RIGHT_THIGH] = InitTexturePart(GS.man,
@@ -231,10 +272,9 @@ int main(int argv, char **args)
             71 
             ); 
 
-    GS.manTexArray[RIGHT_THIGH].mEnableRotation = true;
     GS.manTexArray[RIGHT_THIGH].mRotState = 2;
     GS.manTexArray[RIGHT_THIGH].mRotMax = 20;
-    GS.manTexArray[RIGHT_THIGH].mRotMin = -20;
+    GS.manTexArray[RIGHT_THIGH].mRotMin = -30;
 
     GS.manTexArray[RIGHT_THIGH].mCenter.x = 17;
     GS.manTexArray[RIGHT_THIGH].mCenter.y = 0;
@@ -252,21 +292,29 @@ int main(int argv, char **args)
             62 
             ); 
 
-    GS.manTexArray[RIGHT_LEG].mXrenderOffset = -18;
+    GS.manTexArray[RIGHT_LEG].mXrenderOffset = -10;
     GS.manTexArray[RIGHT_LEG].mRotation = 20;
+    GS.manTexArray[RIGHT_LEG].mRotState = 6;
+    GS.manTexArray[RIGHT_LEG].mParentRotAngleMax = 20;
+    GS.manTexArray[RIGHT_LEG].mParentRotAngleMin = -20;
+    GS.manTexArray[RIGHT_LEG].mRotMax = 30;
+    GS.manTexArray[RIGHT_LEG].mRotMin = 0;
+    GS.manTexArray[RIGHT_LEG].mCenter.x = 13;
+    GS.manTexArray[RIGHT_LEG].mCenter.y = 0;
 
     //right foot
     GS.manTexArray[RIGHT_FOOT] = InitTexturePart(GS.man,
             &GS.manTexArray[RIGHT_LEG], 
             0,
             0,
-            -15,
+            -5,
             60,
             47,
             334,
             36,
             26 
             ); 
+    GS.manTexArray[RIGHT_FOOT].mYrenderOffset = -10;
 
     //left upper Arm
     GS.manTexArray[LEFT_UARM] = InitTexturePart(GS.man,
@@ -280,8 +328,7 @@ int main(int argv, char **args)
             23,
             52 
             ); 
-    GS.manTexArray[LEFT_UARM].mEnableRotation = true;
-    GS.manTexArray[LEFT_UARM].mRotState = 2;
+    GS.manTexArray[LEFT_UARM].mRotState = 0;
     GS.manTexArray[LEFT_UARM].mRotMax = 30;
     GS.manTexArray[LEFT_UARM].mRotMin = -30;
     GS.manTexArray[LEFT_UARM].mCenter.x = 11;
@@ -299,10 +346,9 @@ int main(int argv, char **args)
             19,
             37 
             ); 
-    GS.manTexArray[LEFT_ARM].mEnableRotation = true;
     GS.manTexArray[LEFT_ARM].mXrenderOffset = -2;
     GS.manTexArray[LEFT_ARM].mRotation = 0;
-    GS.manTexArray[LEFT_ARM].mRotState = 5;
+    GS.manTexArray[LEFT_ARM].mRotState = 0;
     GS.manTexArray[LEFT_ARM].mParentRotAngleMax = 20;
     GS.manTexArray[LEFT_ARM].mParentRotAngleMin = -20;
     GS.manTexArray[LEFT_ARM].mRotMax = 20;
@@ -334,8 +380,7 @@ int main(int argv, char **args)
             23,
             52 
             ); 
-    GS.manTexArray[RIGHT_UARM].mEnableRotation = true;
-    GS.manTexArray[RIGHT_UARM].mRotState = 2;
+    GS.manTexArray[RIGHT_UARM].mRotState = 0;
     GS.manTexArray[RIGHT_UARM].mRotMax = 20;
     GS.manTexArray[RIGHT_UARM].mRotMin = -20;
     GS.manTexArray[RIGHT_UARM].mCenter.x = 11;
